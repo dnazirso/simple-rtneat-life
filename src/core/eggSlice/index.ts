@@ -42,11 +42,14 @@ const EggSlice = createSlice({
         },
       }));
     },
+    removeEgg: (state, { payload }: { payload: { id: string } }) => {
+      state.eggs = state.eggs.filter((e) => e.id !== payload.id);
+    },
   },
 });
 
 export const selectEgg = (state: RootState) => state.eggs;
 
-export const { initEggs } = EggSlice.actions;
+export const { initEggs, removeEgg } = EggSlice.actions;
 
 export default EggSlice.reducer;
