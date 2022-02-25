@@ -1,8 +1,29 @@
 .App {
-  text-align: center;
   background-color: #282c34;
   min-height: 100vh;
   color: white;
+}
+
+.Settings {
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Settings > input {
+  width: 300px;
+  height: 20px;
+  margin-bottom: 0.25cm;
+}
+
+.Settings > button {
+  height: 50px;
+  width: 100px;
+  margin-top: 0.75cm;
 }
 
 .App-logo {
