@@ -21,18 +21,13 @@ export default function PetriBox() {
     <div className="Petri">
       <div className="PetriBox">
         {eggs.map((c) => (
-          <Egg key={c.id} id={c.id} x={c.position.x} y={c.position.y} />
+          <Egg key={c.id} {...c} />
         ))}
         {cells.map((c) => (
-          <Cell
-            key={c.id}
-            x={c.position.x}
-            y={c.position.y}
-            angle={c.position.a}
-          />
+          <Cell key={c.id} {...c} />
         ))}
         {food.map((f) => (
-          <Food key={f.id} x={f.position.x} y={f.position.y} />
+          <Food key={f.id} {...f} />
         ))}
       </div>
     </div>

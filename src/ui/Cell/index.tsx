@@ -1,12 +1,6 @@
-export default function Cell({
-  x,
-  y,
-  angle,
-}: {
-  x: number;
-  y: number;
-  angle: number;
-}) {
+import { CellProps } from "../../core/cellSlice";
+
+export default function Cell({ position }: CellProps) {
   return (
     <div
       className="Sprite"
@@ -17,10 +11,10 @@ export default function Cell({
         borderRadius: 5,
         border: "lightgrey 1px solid",
         opacity: 0.75,
-        top: y,
-        left: x,
+        top: position.y,
+        left: position.x,
         transformOrigin: "center",
-        transform: `rotate(${angle}deg)`,
+        transform: `rotate(${position.a}deg)`,
       }}
     />
   );

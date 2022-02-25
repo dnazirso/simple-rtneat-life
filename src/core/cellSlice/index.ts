@@ -3,7 +3,7 @@ import { generateUID } from "../helper";
 import { RootState } from "../store";
 import { Genome } from "../genetic";
 
-type Cell = {
+export type CellProps = {
   id: string;
   position: {
     x: number;
@@ -14,7 +14,7 @@ type Cell = {
 };
 
 type CellContext = {
-  cells: Cell[];
+  cells: CellProps[];
 };
 
 const initialState: CellContext = {

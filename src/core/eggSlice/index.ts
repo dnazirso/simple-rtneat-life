@@ -3,7 +3,7 @@ import { Genome } from "../genetic";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
 
-type Egg = {
+export type EggProps = {
   id: string;
   position: {
     x: number;
@@ -13,7 +13,7 @@ type Egg = {
 };
 
 type EggContext = {
-  eggs: Egg[];
+  eggs: EggProps[];
 };
 
 const initialState: EggContext = {

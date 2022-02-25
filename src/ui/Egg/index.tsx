@@ -1,16 +1,8 @@
 import { useEffect } from "react";
-import { removeEgg } from "../../core/eggSlice";
+import { EggProps, removeEgg } from "../../core/eggSlice";
 import { useAppDispatch } from "../../core/store";
 
-export default function Egg({
-  x,
-  y,
-  id,
-}: {
-  x: number;
-  y: number;
-  id: string;
-}) {
+export default function Egg({ id, position }: EggProps) {
   const dispatch = useAppDispatch();
 
   const hatch = () => {
@@ -30,8 +22,8 @@ export default function Egg({
         backgroundColor: "wheat",
         borderRadius: 5,
         border: "lightgrey 1px solid",
-        top: y,
-        left: x,
+        top: position.y,
+        left: position.x,
       }}
     />
   );

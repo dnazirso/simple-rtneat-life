@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
 
-type Food = {
+export type FoodProps = {
   id: string;
   position: {
     x: number;
@@ -12,7 +12,7 @@ type Food = {
 };
 
 type FoodContext = {
-  food: Food[];
+  food: FoodProps[];
 };
 
 const initialState: FoodContext = {
