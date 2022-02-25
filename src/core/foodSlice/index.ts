@@ -32,7 +32,7 @@ const FoodSlice = createSlice({
       state.food = Array.from(
         { length: payload.numberOfFoods },
         (_, i) => i
-      ).map((c) => ({
+      ).map((_) => ({
         energie: 10,
         id: generateUID(),
         position: {

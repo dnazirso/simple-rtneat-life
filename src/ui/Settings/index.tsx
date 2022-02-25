@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { initCells } from "../../core/cellSlice";
+import { initEggs } from "../../core/eggSlice";
 import { initFood } from "../../core/foodSlice";
 import { useAppDispatch } from "../../core/store";
 
@@ -18,7 +18,7 @@ export default function Settings() {
       initFood({ area: { h: 500, w: 500 }, numberOfFoods: things.nbPalets })
     );
     dispatch(
-      initCells({ area: { h: 500, w: 500 }, numberOfCells: things.nbCells })
+      initEggs({ area: { h: 500, w: 500 }, numberOfEggs: things.nbCells })
     );
 
     navigate("/petri");

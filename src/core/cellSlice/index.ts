@@ -33,7 +33,7 @@ const CellSlice = createSlice({
       state.cells = Array.from(
         { length: payload.numberOfCells },
         (_, i) => i
-      ).map((c) => ({
+      ).map((_) => ({
         energie: 100,
         id: generateUID(),
         position: {

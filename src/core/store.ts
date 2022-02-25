@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import cellSlice from "./cellSlice";
+import eggSlice from "./eggSlice";
 import foodSlice from "./foodSlice";
 
 export const store = configureStore({
   reducer: {
     cells: cellSlice,
     foods: foodSlice,
+    eggs: eggSlice,
   },
 });
 
