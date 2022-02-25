@@ -9,8 +9,8 @@ export default function Cell({
 }) {
   return (
     <div
+      className="Sprite"
       style={{
-        position: "absolute",
         height: 20,
         width: 10,
         backgroundColor: "cornflowerblue",

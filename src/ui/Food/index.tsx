@@ -1,8 +1,8 @@
 export default function Food({ x, y }: { x: number; y: number }) {
   return (
     <div
+      className="Sprite"
       style={{
-        position: "absolute",
         height: 10,
         width: 10,
         backgroundColor: "greenyellow",

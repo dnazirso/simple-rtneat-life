@@ -15,10 +15,10 @@ export default function Settings() {
 
   const handleStart = () => {
     dispatch(
-      initFood({ area: { h: 400, w: 600 }, numberOfFoods: things.nbPalets })
+      initFood({ area: { h: 500, w: 500 }, numberOfFoods: things.nbPalets })
     );
     dispatch(
-      initCells({ area: { h: 400, w: 600 }, numberOfCells: things.nbCells })
+      initCells({ area: { h: 500, w: 500 }, numberOfCells: things.nbCells })
     );
 
     navigate("/petri");

@@ -26,22 +26,24 @@
   margin-top: 0.75cm;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Petri {
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.PetriBox {
+  position: relative;
+  border: rgba(255, 255, 255, 0.1) 1px solid;
+  height: 500px;
+  width: 500px;
+  border-radius: 250px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Sprite {
+  position: absolute;
 }
