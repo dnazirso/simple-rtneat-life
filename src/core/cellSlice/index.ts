@@ -7,6 +7,7 @@ type Cell = {
   position: {
     x: number;
     y: number;
+    a: number;
   };
   energie: number;
 };
@@ -38,6 +39,7 @@ const CellSlice = createSlice({
         position: {
           x: Math.random() * payload.area.w,
           y: Math.random() * payload.area.h,
+          a: Math.random() * 360,
         },
       }));
     },

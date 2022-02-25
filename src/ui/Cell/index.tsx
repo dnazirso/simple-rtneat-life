@@ -1,4 +1,12 @@
-export default function Cell({ x, y }: { x: number; y: number }) {
+export default function Cell({
+  x,
+  y,
+  angle,
+}: {
+  x: number;
+  y: number;
+  angle: number;
+}) {
   return (
     <div
       style={{
@@ -11,6 +19,8 @@ export default function Cell({ x, y }: { x: number; y: number }) {
         opacity: 0.75,
         top: y,
         left: x,
+        transformOrigin: "center",
+        transform: `rotate(${angle}deg)`,
       }}
     />
   );

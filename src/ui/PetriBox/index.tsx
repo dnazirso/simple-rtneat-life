@@ -9,7 +9,12 @@ export default function PetriBox() {
   return (
     <div className="App">
       {cells.map((c) => (
-        <Cell key={c.id} x={c.position.x} y={c.position.y} />
+        <Cell
+          key={c.id}
+          x={c.position.x}
+          y={c.position.y}
+          angle={c.position.a}
+        />
       ))}
       {food.map((f) => (
         <Food key={f.id} x={f.position.x} y={f.position.y} />

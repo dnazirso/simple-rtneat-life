@@ -6,7 +6,7 @@ export default function Food({ x, y }: { x: number; y: number }) {
         height: 10,
         width: 10,
         backgroundColor: "greenyellow",
-        borderRadius: 5,
+        borderRadius: 10,
         border: "lightgrey 1px solid",
         opacity: 0.5,
         top: y,
