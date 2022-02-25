@@ -10,6 +10,7 @@ export type CellProps = {
     y: number;
     a: number;
   };
+  energy: number;
   genome: Genome | null;
 };
 
@@ -29,6 +30,7 @@ const CellSlice = createSlice({
       if (state.cells.some((c) => c.id === payload.egg.id)) return;
       const cell: CellProps = {
         ...payload.egg,
+        energy: Math.round(100 + (Math.random() - 0.5) * 10),
         position: {
           x: payload.egg.position.x,
           y: payload.egg.position.y,
@@ -37,11 +39,14 @@ const CellSlice = createSlice({
       };
       state.cells = [...state.cells, cell];
     },
+    removeCell: (state, { payload }: { payload: { cell: CellProps } }) => {
+      state.cells = state.cells.filter((c) => c.id !== payload.cell.id);
+    },
   },
 });
 
 export const selectCell = (state: RootState) => state.cells;
 
-export const { addCell } = CellSlice.actions;
+export const { addCell, removeCell } = CellSlice.actions;
 
 export default CellSlice.reducer;
