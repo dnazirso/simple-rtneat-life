@@ -1,13 +1,16 @@
 import { useCallback, useEffect } from "react";
+import { addCell } from "../../core/cellSlice";
 import { EggProps, removeEgg } from "../../core/eggSlice";
 import { useAppDispatch } from "../../core/store";
 
-export default function Egg({ id, position }: EggProps) {
+export default function Egg(egg: EggProps) {
   const dispatch = useAppDispatch();
+  const { id, position } = egg;
 
   const hatch = useCallback(() => {
     dispatch(removeEgg({ id }));
-  }, [dispatch, id]);
+    dispatch(addCell({ egg }));
+  }, [dispatch, id, egg]);
 
   useEffect(() => {
     setTimeout(hatch, 5000 + 5000 * Math.random());

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { generateUID } from "../helper";
 import { RootState } from "../store";
 import { Genome } from "../genetic";
+import { EggProps } from "../eggSlice";
 
 export type CellProps = {
   id: string;
@@ -25,30 +25,23 @@ const CellSlice = createSlice({
   name: "CellsInfo",
   initialState,
   reducers: {
-    initCells: (
-      state,
-      {
-        payload,
-      }: { payload: { numberOfCells: number; area: { w: number; h: number } } }
-    ) => {
-      state.cells = Array.from(
-        { length: payload.numberOfCells },
-        (_, i) => i
-      ).map((_) => ({
-        genome: null,
-        id: generateUID(),
+    addCell: (state, { payload }: { payload: { egg: EggProps } }) => {
+      if (state.cells.some((c) => c.id === payload.egg.id)) return;
+      const cell: CellProps = {
+        ...payload.egg,
         position: {
-          x: Math.random() * payload.area.w,
-          y: Math.random() * payload.area.h,
+          x: payload.egg.position.x,
+          y: payload.egg.position.y,
           a: Math.random() * 360,
         },
-      }));
+      };
+      state.cells = [...state.cells, cell];
     },
   },
 });
 
 export const selectCell = (state: RootState) => state.cells;
 
-export const { initCells } = CellSlice.actions;
+export const { addCell } = CellSlice.actions;
 
 export default CellSlice.reducer;
