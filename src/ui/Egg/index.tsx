@@ -1,17 +1,17 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { EggProps, removeEgg } from "../../core/eggSlice";
 import { useAppDispatch } from "../../core/store";
 
 export default function Egg({ id, position }: EggProps) {
   const dispatch = useAppDispatch();
 
-  const hatch = () => {
+  const hatch = useCallback(() => {
     dispatch(removeEgg({ id }));
-  };
+  }, [dispatch, id]);
 
   useEffect(() => {
     setTimeout(hatch, 5000 + 5000 * Math.random());
-  }, []);
+  }, [hatch]);
 
   return (
     <div
