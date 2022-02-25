@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Genome } from "../genetic";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
 
@@ -8,7 +9,7 @@ type Egg = {
     x: number;
     y: number;
   };
-  genome: number | null;
+  genome: Genome | null;
 };
 
 type EggContext = {

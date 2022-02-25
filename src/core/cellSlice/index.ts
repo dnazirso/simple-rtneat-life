@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
+import { Genome } from "../genetic";
 
 type Cell = {
   id: string;
@@ -9,7 +10,7 @@ type Cell = {
     y: number;
     a: number;
   };
-  energie: number;
+  genome: Genome | null;
 };
 
 type CellContext = {
@@ -34,7 +35,7 @@ const CellSlice = createSlice({
         { length: payload.numberOfCells },
         (_, i) => i
       ).map((_) => ({
-        energie: 100,
+        genome: null,
         id: generateUID(),
         position: {
           x: Math.random() * payload.area.w,
