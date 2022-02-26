@@ -3,6 +3,8 @@ import { RootState } from "../store";
 import { Genome } from "../genetic";
 import { EggProps } from "../eggSlice";
 
+const COST = 1;
+
 export type CellProps = {
   id: string;
   position: {
@@ -39,21 +41,22 @@ const CellSlice = createSlice({
       };
       state.cells = [...state.cells, cell];
     },
-    depleteEnergy: (
-      state,
-      { payload: { id } }: { payload: { id: string } }
-    ) => {
-      const index = state.cells.findIndex((c) => c.id === id);
-      state.cells[index].energy--;
-    },
-    removeCell: (state, { payload: { id } }: { payload: { id: string } }) => {
-      state.cells = state.cells.filter((c) => c.id !== id);
+    depleteEnergy: (state) => {
+      state.cells = state.cells.reduce((acc: CellProps[], cell) => {
+        console.log("DEPLETE", cell);
+        if (cell.energy - COST <= 0) {
+          console.log("DEAD", cell);
+          return acc;
+        } else {
+          return [...acc, { ...cell, energy: cell.energy - COST }];
+        }
+      }, []);
     },
   },
 });
 
 export const selectCell = (state: RootState) => state.cells;
 
-export const { addCell, removeCell, depleteEnergy } = CellSlice.actions;
+export const { addCell, depleteEnergy } = CellSlice.actions;
 
 export default CellSlice.reducer;
