@@ -39,14 +39,21 @@ const CellSlice = createSlice({
       };
       state.cells = [...state.cells, cell];
     },
-    removeCell: (state, { payload }: { payload: { cell: CellProps } }) => {
-      state.cells = state.cells.filter((c) => c.id !== payload.cell.id);
+    depleteEnergy: (
+      state,
+      { payload: { id } }: { payload: { id: string } }
+    ) => {
+      const index = state.cells.findIndex((c) => c.id === id);
+      state.cells[index].energy--;
+    },
+    removeCell: (state, { payload: { id } }: { payload: { id: string } }) => {
+      state.cells = state.cells.filter((c) => c.id !== id);
     },
   },
 });
 
 export const selectCell = (state: RootState) => state.cells;
 
-export const { addCell, removeCell } = CellSlice.actions;
+export const { addCell, removeCell, depleteEnergy } = CellSlice.actions;
 
 export default CellSlice.reducer;
