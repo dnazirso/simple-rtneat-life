@@ -1,25 +1,7 @@
-import { useEffect } from "react";
-import { CellProps, depleteEnergy, removeCell } from "../../core/cellSlice";
-import { useAppDispatch } from "../../core/store";
+import { CellProps } from "../../core/cellSlice";
 
 export default function Cell(cell: CellProps) {
-  const dispatch = useAppDispatch();
-  const { position, id, energy } = cell;
-
-  useEffect(() => {
-    const timeout = setInterval(() => {
-      dispatch(depleteEnergy({ id }));
-    }, 50);
-    return () => {
-      clearInterval(timeout);
-    };
-  });
-
-  useEffect(() => {
-    if (energy <= 0) {
-      dispatch(removeCell({ id }));
-    }
-  }, [energy, dispatch, id]);
+  const { position } = cell;
 
   return (
     <div
