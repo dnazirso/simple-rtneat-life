@@ -16,7 +16,10 @@ export const store = configureStore({
     eggs: eggSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+      thunk: false,
+    }).concat(sagaMiddleware),
   devTools: true,
 });
 

@@ -43,9 +43,7 @@ const CellSlice = createSlice({
     },
     depleteEnergy: (state) => {
       state.cells = state.cells.reduce((acc: CellProps[], cell) => {
-        console.log("DEPLETE", cell);
         if (cell.energy - COST <= 0) {
-          console.log("DEAD", cell);
           return acc;
         } else {
           return [...acc, { ...cell, energy: cell.energy - COST }];

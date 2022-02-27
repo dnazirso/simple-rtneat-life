@@ -1,29 +1,20 @@
-import {
-  call,
-  put,
-  take,
-  delay,
-  race,
-  takeEvery,
-  CallEffect,
-  PutEffect,
-} from "redux-saga/effects";
+import { put, take, delay, race, takeEvery } from "redux-saga/effects";
 
-const DELAY = 1000;
+const DELAY = 500;
 
 export const TICK = "TICK";
-const START = "START";
+export const START = "START";
 const STOP = "STOP";
 
 function* timerSagaWorker() {
-  yield call(delay, DELAY);
+  yield delay(DELAY);
   yield put({ type: TICK });
 }
 
 export default function* timerSaga() {
-  yield takeEvery([START, TICK], function* (...args) {
+  yield takeEvery([START, TICK], function* () {
     yield race({
-      task: call(timerSagaWorker, ...args),
+      task: timerSagaWorker(),
       cancel: take(STOP),
     });
   });

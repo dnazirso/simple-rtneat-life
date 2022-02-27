@@ -4,7 +4,6 @@ import { depleteEnergy } from "../cellSlice";
 import { TICK } from "../timerSaga";
 
 function* energySagaWorker() {
-  console.log("ENERGY WORKER");
   yield put(depleteEnergy());
 }
 

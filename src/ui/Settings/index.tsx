@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { initEggs } from "../../core/eggSlice";
 import { initFood } from "../../core/foodSlice";
 import { useAppDispatch } from "../../core/store";
+import { START } from "../../core/timerSaga";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Settings() {
     dispatch(
       initEggs({ area: { h: 500, w: 500 }, numberOfEggs: things.nbCells })
     );
+    dispatch({ type: START });
 
     navigate("/petri");
   };
