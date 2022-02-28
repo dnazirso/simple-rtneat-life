@@ -13,13 +13,8 @@ export default function Egg(egg: EggProps) {
 
   return (
     <div
-      className="Sprite"
+      className="Sprite Egg"
       style={{
-        height: 5,
-        width: 5,
-        backgroundColor: "wheat",
-        borderRadius: 5,
-        border: "lightgrey 1px solid",
         top: position.y,
         left: position.x,
       }}
