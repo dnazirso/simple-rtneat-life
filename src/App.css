@@ -1,11 +1,9 @@
 .App {
-  background-color: #282c34;
   min-height: 100vh;
   color: white;
 }
 
 .Settings {
-  background-color: #282c34;
   min-height: 100vh;
   color: white;
   display: flex;
@@ -27,7 +25,6 @@
 }
 
 .Petri {
-  background-color: #282c34;
   min-height: 100vh;
   color: white;
   display: flex;
@@ -51,8 +48,8 @@
 
 .Sprite.Cell {
   position: absolute;
-  height: 20px;
-  width: 10px;
+  height: 10px;
+  width: 20px;
   background-color: cornflowerblue;
   opacity: 0.75;
   border-radius: 5px;

@@ -1,19 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Genome } from "../genetic";
+import IEgg from "../../models/EggModel";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
 
-export type EggProps = {
-  id: string;
-  position: {
-    x: number;
-    y: number;
-  };
-  genome: Genome | null;
-};
-
 type EggContext = {
-  eggs: EggProps[];
+  eggs: IEgg[];
 };
 
 const initialState: EggContext = {

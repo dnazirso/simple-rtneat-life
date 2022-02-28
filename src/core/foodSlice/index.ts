@@ -1,18 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import IFood from "../../models/FoodModel";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
 
-export type FoodProps = {
-  id: string;
-  position: {
-    x: number;
-    y: number;
-  };
-  energie: number;
-};
-
 type FoodContext = {
-  food: FoodProps[];
+  food: IFood[];
 };
 
 const initialState: FoodContext = {
