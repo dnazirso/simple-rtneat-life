@@ -1,7 +1,6 @@
 import { delay, put, spawn, take, takeEvery } from "redux-saga/effects";
 import IEgg from "../../models/EggModel";
-import { addCell } from "../cellSlice";
-import { removeEgg } from "../eggSlice";
+import { addCell } from "../appSlice";
 import { TICK } from "../timerSaga";
 
 export const HATCH = "HATCH";
@@ -18,7 +17,6 @@ function* hatch({ egg }: { egg: IEgg }) {
     return;
   }
   yield delay(2000 * Math.random());
-  yield put(removeEgg({ id: egg.id }));
   yield put(addCell({ egg }));
   delete nbTickPerEgg[egg.id];
 }

@@ -2,25 +2,35 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import IEgg from "../../models/EggModel";
 import CellModel from "../../models/CellModel";
+import IFood from "../../models/FoodModel";
+import { initEggsList } from "./initEggsList";
+import { initFoodList } from "./initFoodList";
 
 const COST = 1;
 
-type CellContext = {
+export type AppContext = {
   cells: CellModel[];
+  eggs: IEgg[];
+  food: IFood[];
 };
 
-const initialState: CellContext = {
+const initialState: AppContext = {
   cells: [],
+  eggs: [],
+  food: [],
 };
 
-const CellSlice = createSlice({
-  name: "CellsInfo",
+const AppSlice = createSlice({
+  name: "AppInfo",
   initialState,
   reducers: {
+    initFood: initFoodList,
+    initEggs: initEggsList,
     addCell: (state, { payload }: { payload: { egg: IEgg } }) => {
       if (state.cells.some((c) => c.id === payload.egg.id)) return;
       const cell: CellModel = new CellModel(payload.egg);
       state.cells = [...state.cells, cell];
+      state.eggs = state.eggs.filter((e) => e.id !== payload.egg.id);
     },
     depleteEnergy: (state) => {
       state.cells = state.cells.reduce((acc: CellModel[], cell) => {
@@ -42,8 +52,9 @@ const CellSlice = createSlice({
   },
 });
 
-export const selectCell = (state: RootState) => state.cells;
+export const selectApp = (state: RootState) => state.app;
 
-export const { addCell, depleteEnergy, computeOutputs } = CellSlice.actions;
+export const { initFood, initEggs, addCell, depleteEnergy, computeOutputs } =
+  AppSlice.actions;
 
-export default CellSlice.reducer;
+export default AppSlice.reducer;

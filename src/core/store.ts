@@ -1,19 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createSagaMiddleware from "redux-saga";
+import appSlice from "./appSlice";
 
-import cellSlice from "./cellSlice";
-import eggSlice from "./eggSlice";
-import foodSlice from "./foodSlice";
 import rootSaga from "./rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
-    cells: cellSlice,
-    foods: foodSlice,
-    eggs: eggSlice,
+    app: appSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -7,9 +7,7 @@ import Food from "../Food";
 
 export default function PetriBox() {
   const navigate = useNavigate();
-  const { cells } = useAppSelector((state) => state.cells);
-  const { food } = useAppSelector((state) => state.foods);
-  const { eggs } = useAppSelector((state) => state.eggs);
+  const { food, eggs, cells } = useAppSelector((state) => state.app);
 
   useEffect(() => {
     if (food.length === 0 && cells.length === 0 && eggs.length === 0) {
@@ -20,14 +18,14 @@ export default function PetriBox() {
   return (
     <div className="Petri">
       <div className="PetriBox">
+        {food.map((f) => (
+          <Food key={f.id} {...f} />
+        ))}
         {eggs.map((c) => (
           <Egg key={c.id} {...c} />
         ))}
         {cells.map((c) => (
           <Cell key={c.id} {...c} />
-        ))}
-        {food.map((f) => (
-          <Food key={f.id} {...f} />
         ))}
       </div>
     </div>

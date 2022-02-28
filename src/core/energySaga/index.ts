@@ -1,6 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
+import { depleteEnergy, computeOutputs } from "../appSlice";
 
-import { computeOutputs, depleteEnergy } from "../cellSlice";
 import { TICK } from "../timerSaga";
 
 function* energySagaWorker() {
