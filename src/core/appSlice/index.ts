@@ -41,11 +41,22 @@ const AppSlice = createSlice({
         }
       }, []);
     },
-    computeOutputs: (state) => {
-      state.cells = state.cells.map((c) => {
+    computeBehaviors: (state) => {
+      state.cells = state.cells.map((c: CellModel) => {
         const cell = CellModel.cast(c);
-        cell.moveForward();
-        cell.changeDirection(Math.random() * 360);
+        const closestFood = state.food.sort((a, b) => {
+          const dista = Math.sqrt(
+            a.position.x - cell.position.x + (a.position.y - cell.position.y)
+          );
+          const distb = Math.sqrt(
+            b.position.x - cell.position.x + (b.position.y - cell.position.y)
+          );
+          if (dista === distb) return 0;
+          if (dista > distb) return 1;
+          else return -1;
+        });
+        const eaten = cell.behave(closestFood[0] || null);
+        if (eaten) state.food = state.food.filter((f) => f.id !== eaten);
         return cell;
       });
     },
@@ -54,7 +65,7 @@ const AppSlice = createSlice({
 
 export const selectApp = (state: RootState) => state.app;
 
-export const { initFood, initEggs, addCell, depleteEnergy, computeOutputs } =
+export const { initFood, initEggs, addCell, depleteEnergy, computeBehaviors } =
   AppSlice.actions;
 
 export default AppSlice.reducer;

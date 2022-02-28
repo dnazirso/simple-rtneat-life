@@ -1,11 +1,11 @@
 import { put, takeEvery } from "redux-saga/effects";
-import { depleteEnergy, computeOutputs } from "../appSlice";
+import { depleteEnergy, computeBehaviors } from "../appSlice";
 
 import { TICK } from "../timerSaga";
 
 function* energySagaWorker() {
   yield put(depleteEnergy());
-  yield put(computeOutputs());
+  yield put(computeBehaviors());
 }
 
 export default function* energySaga() {
