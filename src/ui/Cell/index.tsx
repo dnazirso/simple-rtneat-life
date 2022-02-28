@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ICell } from "../../models/CellModel";
 
 export default function Cell(cell: ICell) {
@@ -6,7 +7,7 @@ export default function Cell(cell: ICell) {
   return (
     <>
       <div
-        className="Sprite Cell"
+        className={clsx("Sprite Cell", cell.energy < 50 && "Dying")}
         style={{
           top: position.y,
           left: position.x,
