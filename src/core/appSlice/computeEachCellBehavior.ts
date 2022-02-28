@@ -15,8 +15,7 @@ export default function computeEachCellBehavior(state: AppContext) {
       if (dista > distb) return 1;
       else return -1;
     });
-    const eaten = cell.behave(closestFood[0] || null);
-    if (eaten) state.food = state.food.filter((f) => f.id !== eaten);
+    cell.behave(closestFood);
     return cell;
   });
 }
