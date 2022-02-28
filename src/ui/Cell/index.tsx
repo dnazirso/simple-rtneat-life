@@ -1,6 +1,6 @@
-import { CellProps } from "../../core/cellSlice";
+import { ICell } from "../../models/CellModel";
 
-export default function Cell(cell: CellProps) {
+export default function Cell(cell: ICell) {
   const { position } = cell;
 
   return (

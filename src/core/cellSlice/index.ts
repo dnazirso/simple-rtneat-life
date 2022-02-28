@@ -1,23 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { Genome } from "../genetic";
-import { EggProps } from "../eggSlice";
+import IEgg from "../../models/EggModel";
+import CellModel from "../../models/CellModel";
 
 const COST = 1;
 
-export type CellProps = {
-  id: string;
-  position: {
-    x: number;
-    y: number;
-    a: number;
-  };
-  energy: number;
-  genome: Genome | null;
-};
-
 type CellContext = {
-  cells: CellProps[];
+  cells: CellModel[];
 };
 
 const initialState: CellContext = {
@@ -28,21 +17,13 @@ const CellSlice = createSlice({
   name: "CellsInfo",
   initialState,
   reducers: {
-    addCell: (state, { payload }: { payload: { egg: EggProps } }) => {
+    addCell: (state, { payload }: { payload: { egg: IEgg } }) => {
       if (state.cells.some((c) => c.id === payload.egg.id)) return;
-      const cell: CellProps = {
-        ...payload.egg,
-        energy: Math.round(100 + (Math.random() - 0.5) * 10),
-        position: {
-          x: payload.egg.position.x,
-          y: payload.egg.position.y,
-          a: Math.random() * 360,
-        },
-      };
+      const cell: CellModel = new CellModel(payload.egg);
       state.cells = [...state.cells, cell];
     },
     depleteEnergy: (state) => {
-      state.cells = state.cells.reduce((acc: CellProps[], cell) => {
+      state.cells = state.cells.reduce((acc: CellModel[], cell) => {
         if (cell.energy - COST <= 0) {
           return acc;
         } else {
@@ -50,11 +31,19 @@ const CellSlice = createSlice({
         }
       }, []);
     },
+    computeOutputs: (state) => {
+      state.cells = state.cells.map((c) => {
+        const cell = CellModel.cast(c);
+        cell.moveForward();
+        cell.changeDirection(Math.random() * 360);
+        return cell;
+      });
+    },
   },
 });
 
 export const selectCell = (state: RootState) => state.cells;
 
-export const { addCell, depleteEnergy } = CellSlice.actions;
+export const { addCell, depleteEnergy, computeOutputs } = CellSlice.actions;
 
 export default CellSlice.reducer;

@@ -1,6 +1,6 @@
 import { put, take, delay, race, takeEvery } from "redux-saga/effects";
 
-const DELAY = 500;
+const DELAY = 50;
 
 export const TICK = "TICK";
 export const START = "START";
