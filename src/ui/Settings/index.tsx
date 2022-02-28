@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { initEggs } from "../../core/eggSlice";
-import { initFood } from "../../core/foodSlice";
+import { initFood, initEggs } from "../../core/appSlice";
 import { useAppDispatch } from "../../core/store";
 import { START } from "../../core/timerSaga";
 

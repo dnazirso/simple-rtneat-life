@@ -1,5 +1,6 @@
 import { Genome } from "../../core/genetic";
 import IEgg from "../EggModel";
+import IFood from "../FoodModel";
 
 export interface ICell {
   id: string;
@@ -36,6 +37,26 @@ export default class CellModel implements ICell {
     newCell.energy = cell.energy;
     newCell.position.a = cell.position.a;
     return newCell;
+  }
+
+  behave(closestFood: IFood | null) {
+    this.moveForward();
+    this.changeDirection(Math.random() * 360);
+
+    if (!closestFood) return;
+    if (this.isFoodWithinReach(closestFood.position)) {
+      this.eat(closestFood.energie);
+      return closestFood.id;
+    }
+  }
+
+  isFoodWithinReach(coord: IFood["position"]) {
+    return (
+      coord.x < this.position.x + 40 &&
+      coord.x > this.position.x - 40 &&
+      coord.y < this.position.y + 40 &&
+      coord.y > this.position.y - 40
+    );
   }
 
   moveForward() {
