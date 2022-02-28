@@ -4,5 +4,5 @@ export default interface IFood {
     x: number;
     y: number;
   };
-  energie: number;
+  energy: number;
 }

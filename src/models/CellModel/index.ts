@@ -39,24 +39,12 @@ export default class CellModel implements ICell {
     return newCell;
   }
 
-  behave(closestFood: IFood | null) {
+  behave(closestFood: IFood[]) {
     this.moveForward();
     this.changeDirection(Math.random() * 360);
 
-    if (!closestFood) return;
-    if (this.isFoodWithinReach(closestFood.position)) {
-      this.eat(closestFood.energie);
-      return closestFood.id;
-    }
-  }
-
-  isFoodWithinReach(coord: IFood["position"]) {
-    return (
-      coord.x < this.position.x + 40 &&
-      coord.x > this.position.x - 40 &&
-      coord.y < this.position.y + 40 &&
-      coord.y > this.position.y - 40
-    );
+    if (closestFood.length === 0) return;
+    // TODO : link genome to behavior here
   }
 
   moveForward() {

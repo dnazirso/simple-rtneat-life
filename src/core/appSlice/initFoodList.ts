@@ -9,7 +9,7 @@ export function initFoodList(
 ) {
   state.food = Array.from({ length: payload.numberOfFoods }, (_, i) => i).map(
     (_) => ({
-      energie: 10,
+      energy: 10,
       id: generateUID(),
       position: {
         x: Math.random() * payload.area.w,

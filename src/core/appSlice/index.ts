@@ -5,8 +5,10 @@ import CellModel from "../../models/CellModel";
 import IFood from "../../models/FoodModel";
 import { initEggsList } from "./initEggsList";
 import { initFoodList } from "./initFoodList";
+import addCellToList from "./addCellToList";
+import computeEachCellBehavior from "./computeEachCellBehavior";
 
-const COST = 1;
+export const COST = 1;
 
 export type AppContext = {
   cells: CellModel[];
@@ -20,17 +22,29 @@ const initialState: AppContext = {
   food: [],
 };
 
-const AppSlice = createSlice({
+export const AppSlice = createSlice({
   name: "AppInfo",
   initialState,
   reducers: {
     initFood: initFoodList,
     initEggs: initEggsList,
-    addCell: (state, { payload }: { payload: { egg: IEgg } }) => {
-      if (state.cells.some((c) => c.id === payload.egg.id)) return;
-      const cell: CellModel = new CellModel(payload.egg);
-      state.cells = [...state.cells, cell];
-      state.eggs = state.eggs.filter((e) => e.id !== payload.egg.id);
+    addCell: addCellToList,
+    computeBehaviors: computeEachCellBehavior,
+    computeCollision: (state) => {
+      state.cells.forEach((c) => {
+        state.food = state.food.filter((f) => {
+          const hasCollid =
+            f.position.x < c.position.x + 20 &&
+            f.position.x > c.position.x - 20 &&
+            f.position.y < c.position.y + 20 &&
+            f.position.y > c.position.y - 20;
+
+          const cell = CellModel.cast(c);
+          cell.eat(f.energy);
+
+          return !hasCollid;
+        });
+      });
     },
     depleteEnergy: (state) => {
       state.cells = state.cells.reduce((acc: CellModel[], cell) => {
@@ -41,31 +55,18 @@ const AppSlice = createSlice({
         }
       }, []);
     },
-    computeBehaviors: (state) => {
-      state.cells = state.cells.map((c: CellModel) => {
-        const cell = CellModel.cast(c);
-        const closestFood = state.food.sort((a, b) => {
-          const dista = Math.sqrt(
-            a.position.x - cell.position.x + (a.position.y - cell.position.y)
-          );
-          const distb = Math.sqrt(
-            b.position.x - cell.position.x + (b.position.y - cell.position.y)
-          );
-          if (dista === distb) return 0;
-          if (dista > distb) return 1;
-          else return -1;
-        });
-        const eaten = cell.behave(closestFood[0] || null);
-        if (eaten) state.food = state.food.filter((f) => f.id !== eaten);
-        return cell;
-      });
-    },
   },
 });
 
 export const selectApp = (state: RootState) => state.app;
 
-export const { initFood, initEggs, addCell, depleteEnergy, computeBehaviors } =
-  AppSlice.actions;
+export const {
+  initFood,
+  initEggs,
+  addCell,
+  depleteEnergy,
+  computeBehaviors,
+  computeCollision,
+} = AppSlice.actions;
 
 export default AppSlice.reducer;
