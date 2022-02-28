@@ -4,7 +4,7 @@ const DELAY = 50;
 
 export const TICK = "TICK";
 export const START = "START";
-const STOP = "STOP";
+export const STOP = "STOP";
 
 function* timerSagaWorker() {
   yield delay(DELAY);
