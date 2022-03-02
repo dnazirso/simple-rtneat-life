@@ -3,7 +3,7 @@ import { Genome } from "../genetic";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
 
-export type EggProps = {
+export type IEgg = {
   id: string;
   position: {
     x: number;
@@ -13,12 +13,23 @@ export type EggProps = {
 };
 
 type EggContext = {
-  eggs: EggProps[];
+  eggs: IEgg[];
 };
 
 const initialState: EggContext = {
   eggs: [],
 };
+
+function newEgg({ w, h }: { w: number; h: number }) {
+  return {
+    genome: null,
+    id: generateUID(),
+    position: {
+      x: Math.random() * w,
+      y: Math.random() * h,
+    },
+  };
+}
 
 const EggSlice = createSlice({
   name: "EggInfo",
@@ -33,14 +44,7 @@ const EggSlice = createSlice({
       state.eggs = Array.from(
         { length: payload.numberOfEggs },
         (_, i) => i
-      ).map((_) => ({
-        genome: null,
-        id: generateUID(),
-        position: {
-          x: Math.random() * payload.area.w,
-          y: Math.random() * payload.area.h,
-        },
-      }));
+      ).map((_) => newEgg(payload.area));
     },
     removeEgg: (state, { payload }: { payload: { id: string } }) => {
       state.eggs = state.eggs.filter((e) => e.id !== payload.id);

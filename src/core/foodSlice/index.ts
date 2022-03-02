@@ -2,22 +2,33 @@ import { createSlice } from "@reduxjs/toolkit";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
 
-export type FoodProps = {
+export type IFood = {
   id: string;
   position: {
     x: number;
     y: number;
   };
-  energie: number;
+  energy: number;
 };
 
-type FoodContext = {
-  food: FoodProps[];
+export type FoodContext = {
+  foods: IFood[];
 };
 
 const initialState: FoodContext = {
-  food: [],
+  foods: [],
 };
+
+function newFood({ w, h }: { w: number; h: number }) {
+  return {
+    energy: 10,
+    id: generateUID(),
+    position: {
+      x: Math.random() * w,
+      y: Math.random() * h,
+    },
+  };
+}
 
 const FoodSlice = createSlice({
   name: "FoodInfo",
@@ -29,23 +40,22 @@ const FoodSlice = createSlice({
         payload,
       }: { payload: { numberOfFoods: number; area: { w: number; h: number } } }
     ) => {
-      state.food = Array.from(
+      state.foods = Array.from(
         { length: payload.numberOfFoods },
         (_, i) => i
-      ).map((_) => ({
-        energie: 10,
-        id: generateUID(),
-        position: {
-          x: Math.random() * payload.area.w,
-          y: Math.random() * payload.area.h,
-        },
-      }));
+      ).map((_) => newFood(payload.area));
+    },
+    updateFoods: (
+      state,
+      { payload: { foods } }: { payload: { foods: IFood[] } }
+    ) => {
+      state.foods = foods;
     },
   },
 });
 
 export const selectFood = (state: RootState) => state.foods;
 
-export const { initFood } = FoodSlice.actions;
+export const { initFood, updateFoods } = FoodSlice.actions;
 
 export default FoodSlice.reducer;

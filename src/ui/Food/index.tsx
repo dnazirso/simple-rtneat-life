@@ -1,6 +1,6 @@
-import { FoodProps } from "../../core/foodSlice";
+import { IFood } from "../../core/foodSlice";
 
-export default function Food({ position }: FoodProps) {
+export default function Food({ position }: IFood) {
   return (
     <div
       className="Sprite Food"

@@ -1,11 +1,9 @@
 .App {
-  background-color: #282c34;
   min-height: 100vh;
   color: white;
 }
 
 .Settings {
-  background-color: #282c34;
   min-height: 100vh;
   color: white;
   display: flex;
@@ -27,7 +25,6 @@
 }
 
 .Petri {
-  background-color: #282c34;
   min-height: 100vh;
   color: white;
   display: flex;
@@ -51,12 +48,27 @@
 
 .Sprite.Cell {
   position: absolute;
-  height: 20px;
-  width: 10px;
+  height: 10px;
+  width: 20px;
   background-color: cornflowerblue;
   opacity: 0.75;
   border-radius: 5px;
   transform-origin: center;
+}
+
+.Sprite.Cell.Dying {
+  background-color: coral;
+}
+
+.Sprite.Zone {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: cornsilk 1px solid;
+  opacity: 0.75;
+  border-radius: 20px;
+  transform-origin: center;
+  transform: translate(-20.5px, -20.5px);
 }
 
 .Sprite.Egg {
@@ -65,6 +77,8 @@
   width: 5px;
   background-color: wheat;
   border-radius: 5px;
+  transform-origin: center;
+  transform: translate(-2.5px, -2.5px);
 }
 
 .Sprite.Food {
@@ -74,4 +88,6 @@
   background-color: greenyellow;
   border-radius: 10px;
   opacity: 0.5;
+  transform-origin: center;
+  transform: translate(-5.5px, -5.5px);
 }

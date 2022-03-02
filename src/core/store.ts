@@ -6,6 +6,7 @@ import cellSlice from "./cellSlice";
 import eggSlice from "./eggSlice";
 import foodSlice from "./foodSlice";
 import rootSaga from "./rootSaga";
+import settingsSlice from "./settingsSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     cells: cellSlice,
     foods: foodSlice,
     eggs: eggSlice,
+    settings: settingsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

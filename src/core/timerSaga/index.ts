@@ -1,13 +1,13 @@
-import { put, take, delay, race, takeEvery } from "redux-saga/effects";
-
-const DELAY = 500;
+import { put, take, delay, race, takeEvery, select } from "redux-saga/effects";
+import { selectSettings, SettingsContext } from "../settingsSlice";
 
 export const TICK = "TICK";
 export const START = "START";
-const STOP = "STOP";
+export const STOP = "STOP";
 
 function* timerSagaWorker() {
-  yield delay(DELAY);
+  const { settings }: SettingsContext = yield select(selectSettings);
+  yield delay(settings.tickDelay);
   yield put({ type: TICK });
 }
 

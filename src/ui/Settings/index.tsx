@@ -1,25 +1,21 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { initEggs } from "../../core/eggSlice";
 import { initFood } from "../../core/foodSlice";
-import { useAppDispatch } from "../../core/store";
+import { setSettings } from "../../core/settingsSlice";
+import { useAppDispatch, useAppSelector } from "../../core/store";
 import { START } from "../../core/timerSaga";
 
 export default function Settings() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const [things, SetThings] = useState({
-    nbCells: 10,
-    nbPalets: 50,
-  });
+  const { settings } = useAppSelector((state) => state.settings);
 
   const handleStart = () => {
     dispatch(
-      initFood({ area: { h: 500, w: 500 }, numberOfFoods: things.nbPalets })
+      initFood({ area: { h: 500, w: 500 }, numberOfFoods: settings.nbPalets })
     );
     dispatch(
-      initEggs({ area: { h: 500, w: 500 }, numberOfEggs: things.nbCells })
+      initEggs({ area: { h: 500, w: 500 }, numberOfEggs: settings.nbCells })
     );
     dispatch({ type: START });
 
@@ -33,9 +29,11 @@ export default function Settings() {
         id="cells"
         type="number"
         placeholder="number of cells"
-        value={things.nbCells}
+        value={settings.nbCells}
         onChange={(e) =>
-          SetThings({ ...things, nbCells: Number(e.target.value) })
+          dispatch(
+            setSettings({ ...settings, nbCells: Number(e.target.value) })
+          )
         }
       />
       <label htmlFor="palets">number of palets</label>
@@ -43,13 +41,27 @@ export default function Settings() {
         id="palets"
         type="number"
         placeholder="number of palets"
-        value={things.nbPalets}
+        value={settings.nbPalets}
         onChange={(e) =>
-          SetThings({ ...things, nbPalets: Number(e.target.value) })
+          dispatch(
+            setSettings({ ...settings, nbPalets: Number(e.target.value) })
+          )
+        }
+      />
+      <label htmlFor="tick">tick delay</label>
+      <input
+        id="tick"
+        type="number"
+        placeholder="tick delay"
+        value={settings.tickDelay}
+        onChange={(e) =>
+          dispatch(
+            setSettings({ ...settings, tickDelay: Number(e.target.value) })
+          )
         }
       />
       <button
-        disabled={things.nbCells === 0 || things.nbPalets === 0}
+        disabled={settings.nbCells === 0 || settings.nbPalets === 0}
         onClick={handleStart}
       >
         Start

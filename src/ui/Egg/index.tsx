@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { EggProps } from "../../core/eggSlice";
+import { IEgg } from "../../core/eggSlice";
 import { HATCH } from "../../core/hatchSaga";
 import { useAppDispatch } from "../../core/store";
 
-export default function Egg(egg: EggProps) {
+export default function Egg(egg: IEgg) {
   const dispatch = useAppDispatch();
   const { position } = egg;
 
