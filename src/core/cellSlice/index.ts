@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState, store } from "../store";
+import { RootState } from "../store";
 import { Genome } from "../genetic";
 import { IEgg } from "../eggSlice";
 import { IFood } from "../foodSlice";
-import { EAT } from "../foodSaga";
 
 const COST = 1;
 
@@ -14,12 +13,13 @@ export type ICell = {
     y: number;
     a: number;
   };
+  digesting: string[];
   energy: number;
   genome: Genome | null;
   speed: number;
 };
 
-type CellContext = {
+export type CellContext = {
   cells: ICell[];
 };
 
@@ -34,6 +34,7 @@ function newCell({ id, genome, position }: IEgg) {
     position: { ...position, a: Math.random() * 360 },
     energy: Math.round(1000 + (Math.random() - 0.5) * 10),
     speed: Math.round(10 + (Math.random() - 0.5) * 10),
+    digesting: [],
   };
 }
 
@@ -51,21 +52,18 @@ function changeDirection(cell: ICell, a: number) {
 }
 
 function eat(cell: ICell, prevFoods: IFood[]) {
-  const filteredFood = prevFoods.filter((food) => {
+  prevFoods.forEach((food) => {
     const hasCollid =
       food.position.x < cell.position.x + 20 &&
       food.position.x > cell.position.x - 20 &&
       food.position.y < cell.position.y + 20 &&
       food.position.y > cell.position.y - 20;
 
-    cell.energy += food.energy;
+    if (!cell.digesting.includes(food.id)) cell.energy += food.energy;
 
-    return !hasCollid;
+    if (hasCollid) cell.digesting = [...cell.digesting, food.id];
   });
-
-  const { energy } = cell;
-
-  return { energy, filteredFood };
+  return cell;
 }
 
 const CellSlice = createSlice({
@@ -93,9 +91,8 @@ const CellSlice = createSlice({
       state.cells = state.cells.map((cell) => {
         cell = moveForward(cell);
         cell = changeDirection(cell, Math.random() * 360);
-        const { energy, filteredFood } = eat(cell, foods);
-        cell.energy = energy;
-        // store.dispatch({ type: EAT, payload: filteredFood });
+        cell = eat(cell, foods);
+
         return cell;
       });
     },

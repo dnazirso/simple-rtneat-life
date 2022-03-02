@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ICell } from "../cellSlice";
 import { generateUID } from "../helper";
 import { RootState } from "../store";
 
@@ -47,9 +48,10 @@ const FoodSlice = createSlice({
     },
     updateFoods: (
       state,
-      { payload: { foods } }: { payload: { foods: IFood[] } }
+      { payload: { cells } }: { payload: { cells: ICell[] } }
     ) => {
-      state.foods = foods;
+      const foodIDs: string[] = cells.flatMap((cell: ICell) => cell.digesting);
+      state.foods = state.foods.filter((food) => !foodIDs.includes(food.id));
     },
   },
 });

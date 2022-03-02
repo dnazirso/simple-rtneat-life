@@ -19,7 +19,7 @@ export type SettingsContext = {
 
 const initialState: SettingsContext = {
   settings: {
-    tickDelay: 50,
+    tickDelay: 100,
     nbCells: 10,
     nbPalets: 50,
     area: {

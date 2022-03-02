@@ -24,9 +24,7 @@ function* hatchSagaWorker({ egg }: { egg: IEgg }) {
 
 export default function* hatchSaga() {
   yield takeEvery([TICK], function* () {
-    while (true) {
-      const { payload } = yield take(HATCH);
-      yield spawn(hatchSagaWorker, payload);
-    }
+    const { payload } = yield take(HATCH);
+    yield spawn(hatchSagaWorker, payload);
   });
 }
