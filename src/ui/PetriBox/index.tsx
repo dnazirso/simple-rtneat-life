@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../core/AppContext";
 import Cell from "../Cell";
-import Controls from "../Controls";
 import Egg from "../Egg";
 import Food from "../Food";
 
@@ -29,21 +28,18 @@ export default function PetriBox() {
   }, [behave, hatch, pause, settings.tickDelay]);
 
   return (
-    <>
-      <Controls />
-      <div className="Petri">
-        <div className="PetriBox">
-          {foods.map((f) => (
-            <Food key={f.id} {...f} />
-          ))}
-          {eggs.map((c) => (
-            <Egg key={c.id} {...c} />
-          ))}
-          {cells.map((c) => (
-            <Cell key={c.id} zone={ShowCellZone} {...c} />
-          ))}
-        </div>
+    <div className="Petri">
+      <div className="PetriBox">
+        {foods.map((f) => (
+          <Food key={f.id} {...f} />
+        ))}
+        {eggs.map((c) => (
+          <Egg key={c.id} {...c} />
+        ))}
+        {cells.map((c) => (
+          <Cell key={c.id} zone={ShowCellZone} {...c} />
+        ))}
       </div>
-    </>
+    </div>
   );
 }

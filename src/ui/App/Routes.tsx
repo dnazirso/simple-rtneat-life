@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import PetriBox from "../PetriBox";
+import Layout from "../Layout";
 import Settings from "../Settings";
 
 export default function Routes() {
@@ -10,7 +10,7 @@ export default function Routes() {
     },
     {
       path: "/petri",
-      element: <PetriBox />,
+      element: <Layout />,
     },
   ]);
   return routes;
