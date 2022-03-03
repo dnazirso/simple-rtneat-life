@@ -1,0 +1,93 @@
+.App {
+  min-height: 100vh;
+  color: white;
+}
+
+.Settings {
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Settings > input {
+  width: 300px;
+  height: 20px;
+  margin-bottom: 0.25cm;
+}
+
+.Settings > button {
+  height: 50px;
+  width: 100px;
+  margin-top: 0.75cm;
+}
+
+.Petri {
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.PetriBox {
+  position: relative;
+  border: rgba(255, 255, 255, 0.1) 1px solid;
+  height: 500px;
+  width: 500px;
+  border-radius: 250px;
+}
+
+.Sprite {
+  position: absolute;
+  border: lightgrey 1px solid;
+}
+
+.Sprite.Cell {
+  position: absolute;
+  height: 10px;
+  width: 20px;
+  background-color: cornflowerblue;
+  opacity: 0.75;
+  border-radius: 5px;
+  transform-origin: center;
+}
+
+.Sprite.Cell.Dying {
+  background-color: coral;
+}
+
+.Sprite.Zone {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: cornsilk 1px solid;
+  opacity: 0.75;
+  border-radius: 20px;
+  transform-origin: center;
+  transform: translate(-20.5px, -20.5px);
+}
+
+.Sprite.Egg {
+  position: absolute;
+  height: 5px;
+  width: 5px;
+  background-color: wheat;
+  border-radius: 5px;
+  transform-origin: center;
+  transform: translate(-2.5px, -2.5px);
+}
+
+.Sprite.Food {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background-color: greenyellow;
+  border-radius: 10px;
+  opacity: 0.5;
+  transform-origin: center;
+  transform: translate(-5.5px, -5.5px);
+}

@@ -1,13 +1,12 @@
-export default function Food() {
+import { IFood } from "../../models/Food";
+
+export default function Food({ position }: IFood) {
   return (
     <div
+      className="Sprite Food"
       style={{
-        height: 10,
-        width: 10,
-        backgroundColor: "greenyellow",
-        borderRadius: 5,
-        border: "lightgrey 1px solid",
-        opacity: 0.5,
+        top: position.y,
+        left: position.x,
       }}
     />
   );

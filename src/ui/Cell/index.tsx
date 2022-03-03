@@ -1,14 +1,25 @@
-export default function Cell() {
+import { ICell } from "../../models/Cell";
+
+export default function Cell(cell: ICell) {
+  const { position } = cell;
+
   return (
-    <div
-      style={{
-        height: 20,
-        width: 10,
-        backgroundColor: "cornflowerblue",
-        borderRadius: 5,
-        border: "lightgrey 1px solid",
-        opacity: 0.75,
-      }}
-    />
+    <>
+      <div
+        className={"Sprite Cell" + (cell.energy < 50 ? " Dying" : "")}
+        style={{
+          top: position.y,
+          left: position.x,
+          transform: `translate(-11px, -5.5px) rotate(${position.a}deg) `,
+        }}
+      />
+      <div
+        className="Sprite Zone"
+        style={{
+          top: position.y,
+          left: position.x,
+        }}
+      />
+    </>
   );
 }

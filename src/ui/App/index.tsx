@@ -1,14 +1,13 @@
-import Cell from "../Cell";
-import Food from "../Food";
-import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import { AppContextProvider } from "../../core/AppContext";
+import Routes from "./Routes";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <Cell />
-      <Food />
-    </div>
+    <AppContextProvider>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </AppContextProvider>
   );
 }
-
-export default App;
