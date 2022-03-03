@@ -6,7 +6,9 @@ export interface ISettingsReducer {
   settings: ISettings;
   pause: boolean;
   ShowCellZone: boolean;
+  selected: string | null;
   setPause: (pause: boolean) => void;
+  setSelected: (selected: string | null) => void;
   setShowCellZone: (ShowCellZone: boolean) => void;
   setSettings: (settings: ISettings) => void;
   saveToLocalStorage: () => void;
@@ -23,9 +25,11 @@ export const initialSettings: ISettingsReducer = {
       w: 500,
     },
   },
-  ShowCellZone: false,
   pause: false,
+  ShowCellZone: false,
+  selected: null,
   setPause: (pause: boolean) => {},
+  setSelected: (selected: string | null) => {},
   setShowCellZone: (ShowCellZone: boolean) => {},
   setSettings: (settings: ISettings) => {},
   saveToLocalStorage: () => {},
@@ -37,6 +41,10 @@ export default function SettingsReducer(
 ): ISettingsReducer {
   function setPause(pause: boolean) {
     app.setState({ pause });
+  }
+
+  function setSelected(selected: string | null) {
+    app.setState({ selected });
   }
 
   function setShowCellZone(ShowCellZone: boolean) {
@@ -68,6 +76,7 @@ export default function SettingsReducer(
     ...initialSettings,
     setShowCellZone,
     setPause,
+    setSelected,
     setSettings,
     saveToLocalStorage,
     getContextFromLocalStorage,

@@ -92,12 +92,18 @@
   transform: translate(-5.5px, -5.5px);
 }
 
-.Controls {
+.PanelInfo {
   position: absolute;
   padding-top: 10px;
   padding-left: 10px;
   min-width: 200px;
   color: white;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.Controls {
   display: flex;
   flex-direction: column;
   z-index: 1000;
@@ -138,4 +144,19 @@
 
 .Controls > div > div:active {
   background-color: black;
+}
+
+.NeuralNetWork {
+  position: relative;
+  margin-left: 10px;
+}
+
+.Node {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: ghostwhite;
+  transform-origin: center;
+  transform: translate(-10px, -10px);
 }

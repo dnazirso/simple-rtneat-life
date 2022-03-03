@@ -5,7 +5,7 @@ import PetriBox from "../PetriBox";
 export default function Layout() {
   return (
     <>
-      <div className="Controls">
+      <div className="PanelInfo">
         <Controls />
         <NeuralNetwork />
       </div>

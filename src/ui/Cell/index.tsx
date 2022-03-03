@@ -1,13 +1,19 @@
 import { ICell } from "../../models/Cell";
 
 export default function Cell({
+  id,
   position,
   energy,
   zone,
-}: ICell & { zone: boolean }) {
+  selectCell,
+}: ICell & { zone: boolean; selectCell: Function }) {
+  const handleSelection = () => {
+    selectCell(id);
+  };
   return (
     <>
       <div
+        onClick={handleSelection}
         className={"Sprite Cell" + (energy < 50 ? "  Dying" : "")}
         style={{
           top: position.y,

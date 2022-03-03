@@ -36,7 +36,7 @@ export function initNodes() {
     nodes.push(
       new Node({
         x: 0,
-        y: (1 / NUMBER_OF_INPUT_NODES) * index + 1,
+        y: (index + 1) / NUMBER_OF_INPUT_NODES,
         activation: Math.random(),
       })
     );
@@ -44,8 +44,8 @@ export function initNodes() {
   for (let index = 0; index < NUMBER_OF_OUTPUT_NODES; index++) {
     nodes.push(
       new Node({
-        x: 0,
-        y: (1 / NUMBER_OF_INPUT_NODES) * index + 1,
+        x: 1,
+        y: (index + 1) / NUMBER_OF_INPUT_NODES,
         activation: Math.random(),
       })
     );

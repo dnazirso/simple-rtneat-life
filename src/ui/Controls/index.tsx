@@ -19,6 +19,7 @@ export default function Controls() {
     context.setShowCellZone(!context.ShowCellZone);
   };
   const handleRepeat = () => {
+    context.setSelected(null);
     context.setPause(false);
     context.emptyCells();
     context.initEggs();
@@ -30,7 +31,7 @@ export default function Controls() {
   };
 
   return (
-    <>
+    <div className="Controls">
       <label htmlFor="tick">tick delay: {context.settings.tickDelay}ms</label>
       <input
         id="tick"
@@ -55,6 +56,6 @@ export default function Controls() {
         {context.pause && <div onClick={handleNextFrame}>+1</div>}
         <div onClick={handleRepeat}>⭯</div>
       </div>
-    </>
+    </div>
   );
 }
