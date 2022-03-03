@@ -4,6 +4,10 @@ import { IAppContext, Props } from "../AppContext";
 
 export interface ISettingsReducer {
   settings: ISettings;
+  pause: boolean;
+  ShowCellZone: boolean;
+  setPause: (pause: boolean) => void;
+  setShowCellZone: (ShowCellZone: boolean) => void;
   setSettings: (settings: ISettings) => void;
   saveToLocalStorage: () => void;
   getContextFromLocalStorage: () => void;
@@ -19,6 +23,10 @@ export const initialSettings: ISettingsReducer = {
       w: 500,
     },
   },
+  ShowCellZone: false,
+  pause: false,
+  setPause: (pause: boolean) => {},
+  setShowCellZone: (ShowCellZone: boolean) => {},
   setSettings: (settings: ISettings) => {},
   saveToLocalStorage: () => {},
   getContextFromLocalStorage: () => {},
@@ -27,6 +35,14 @@ export const initialSettings: ISettingsReducer = {
 export default function SettingsReducer(
   app: Component<Props, IAppContext>
 ): ISettingsReducer {
+  function setPause(pause: boolean) {
+    app.setState({ pause });
+  }
+
+  function setShowCellZone(ShowCellZone: boolean) {
+    app.setState({ ShowCellZone });
+  }
+
   function setSettings(settings: ISettings) {
     app.setState({ settings });
   }
@@ -50,6 +66,8 @@ export default function SettingsReducer(
 
   return {
     ...initialSettings,
+    setShowCellZone,
+    setPause,
     setSettings,
     saveToLocalStorage,
     getContextFromLocalStorage,

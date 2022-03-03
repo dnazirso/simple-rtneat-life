@@ -1,6 +1,10 @@
 import { ICell } from "../../models/Cell";
 
-export default function Cell({ position, energy }: ICell) {
+export default function Cell({
+  position,
+  energy,
+  zone,
+}: ICell & { zone: boolean }) {
   return (
     <>
       <div
@@ -11,13 +15,15 @@ export default function Cell({ position, energy }: ICell) {
           transform: `translate(-11px, -5.5px) rotate(${position.a}deg) `,
         }}
       />
-      <div
-        className="Sprite Zone"
-        style={{
-          top: position.y,
-          left: position.x,
-        }}
-      />
+      {zone && (
+        <div
+          className="Sprite Zone"
+          style={{
+            top: position.y,
+            left: position.x,
+          }}
+        />
+      )}
     </>
   );
 }

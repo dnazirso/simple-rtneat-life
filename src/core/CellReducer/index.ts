@@ -8,12 +8,14 @@ const COST = 1;
 
 export interface ICellReducer {
   cells: Cell[];
+  emptyCells: () => void;
   addCell: (egg: IEgg) => void;
   behave: () => void;
 }
 
 export const initialCells: ICellReducer = {
   cells: [],
+  emptyCells: () => {},
   addCell: (egg: IEgg) => {},
   behave: () => {},
 };
@@ -21,6 +23,10 @@ export const initialCells: ICellReducer = {
 export default function CellReducer(
   app: Component<Props, IAppContext>
 ): ICellReducer {
+  function emptyCells() {
+    app.setState({ cells: [] });
+  }
+
   function addCell(egg: IEgg) {
     const cells = [...app.state.cells, new Cell(egg)];
     app.setState({ ...app.state, cells });
@@ -47,5 +53,6 @@ export default function CellReducer(
     cells: [],
     addCell,
     behave,
+    emptyCells,
   };
 }
