@@ -3,7 +3,7 @@ import { IEgg } from "../Egg";
 import { IFood } from "../Food";
 import { Genome } from "../genetic";
 
-export type ICell = {
+export interface ICell {
   id: string;
   position: {
     x: number;
@@ -13,7 +13,7 @@ export type ICell = {
   energy: number;
   genome: Genome | null;
   speed: number;
-};
+}
 
 export default class Cell implements ICell {
   id: string;
@@ -25,7 +25,7 @@ export default class Cell implements ICell {
   constructor();
   constructor(cell: ICell);
   constructor(egg: IEgg);
-  constructor(obj?: ICell | IEgg) {
+  constructor(obj?: ICell) {
     this.id = obj?.id ?? generateUID();
     this.genome = obj?.genome ?? null;
     this.position = obj?.position ?? {
@@ -34,7 +34,7 @@ export default class Cell implements ICell {
       a: Math.random() * 360,
     };
     this.energy = obj?.energy ?? 1000 + Math.round(5 * (Math.random() - 0.5));
-    this.speed = 1;
+    this.speed = obj?.speed ?? 1;
   }
 
   behave() {

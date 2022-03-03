@@ -17,10 +17,13 @@ export default function PetriBox() {
   }, [cells.length, eggs.length, foods.length, navigate]);
 
   useEffect(() => {
-    setInterval(() => {
+    const intervalID = setInterval(() => {
       behave();
       hatch();
     }, settings.tickDelay);
+    return () => {
+      clearInterval(intervalID);
+    };
   }, [behave, hatch, settings.tickDelay]);
 
   return (

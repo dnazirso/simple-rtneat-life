@@ -1,4 +1,4 @@
-export type ISettings = {
+export interface ISettings {
   tickDelay: number;
   nbCells: number;
   nbPalets: number;
@@ -6,4 +6,4 @@ export type ISettings = {
     h: number;
     w: number;
   };
-};
+}

@@ -1,13 +1,13 @@
 import { generateUID } from "../../helper";
 
-export type IFood = {
+export interface IFood {
   id: string;
   position: {
     x: number;
     y: number;
   };
   energy: number;
-};
+}
 
 export default class Food implements IFood {
   id: string;
