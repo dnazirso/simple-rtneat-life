@@ -1,12 +1,10 @@
 import { ICell } from "../../models/Cell";
 
-export default function Cell(cell: ICell) {
-  const { position } = cell;
-
+export default function Cell({ position, energy }: ICell) {
   return (
     <>
       <div
-        className={"Sprite Cell" + (cell.energy < 50 ? " Dying" : "")}
+        className={"Sprite Cell" + (energy < 50 ? "  Dying" : "")}
         style={{
           top: position.y,
           left: position.x,

@@ -1,8 +1,6 @@
 import { IEgg } from "../../models/Egg";
 
-export default function Egg(egg: IEgg) {
-  const { position } = egg;
-
+export default function Egg({ position }: IEgg) {
   return (
     <div
       className="Sprite Egg"

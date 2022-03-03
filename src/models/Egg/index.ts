@@ -6,6 +6,7 @@ export type IEgg = {
   position: {
     x: number;
     y: number;
+    a: number;
   };
   energy: number;
   genome: Genome | null;
@@ -14,7 +15,7 @@ export type IEgg = {
 
 export default class Egg implements IEgg {
   id: string;
-  position: { x: number; y: number };
+  position: { x: number; y: number; a: number };
   energy: number;
   genome: Genome | null;
   hatchDelay: number;
@@ -24,6 +25,7 @@ export default class Egg implements IEgg {
     this.position = {
       x: Math.random() * w,
       y: Math.random() * h,
+      a: Math.random() * 360,
     };
     this.energy = 1000 + Math.round(5 * (Math.random() - 0.5));
     this.genome = null;

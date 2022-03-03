@@ -1,3 +1,4 @@
+import { generateUID } from "../../helper";
 import { IEgg } from "../Egg";
 import { IFood } from "../Food";
 import { Genome } from "../genetic";
@@ -21,11 +22,18 @@ export default class Cell implements ICell {
   genome: Genome | null;
   speed: number;
 
-  constructor(cell: IEgg | Cell) {
-    this.id = cell.id;
-    this.genome = cell.genome;
-    this.position = { ...cell.position, a: Math.random() * 360 };
-    this.energy = cell.energy;
+  constructor();
+  constructor(cell: ICell);
+  constructor(egg: IEgg);
+  constructor(obj?: ICell | IEgg) {
+    this.id = obj?.id ?? generateUID();
+    this.genome = obj?.genome ?? null;
+    this.position = obj?.position ?? {
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      a: Math.random() * 360,
+    };
+    this.energy = obj?.energy ?? 1000 + Math.round(5 * (Math.random() - 0.5));
     this.speed = 1;
   }
 
