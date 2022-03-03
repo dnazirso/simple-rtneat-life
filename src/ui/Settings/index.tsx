@@ -13,6 +13,28 @@ export default function Settings() {
     navigate("/petri");
   };
 
+  const handleSettings = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (Number(e.target.value) <= 0) return;
+    if (e.target.id === "cells") {
+      context.setSettings({
+        ...context.settings,
+        nbCells: Number(e.target.value),
+      });
+    }
+    if (e.target.id === "palets") {
+      context.setSettings({
+        ...context.settings,
+        nbPalets: Number(e.target.value),
+      });
+    }
+    if (e.target.id === "tick") {
+      context.setSettings({
+        ...context.settings,
+        tickDelay: Number(e.target.value),
+      });
+    }
+  };
+
   return (
     <div className="Settings">
       <label htmlFor="cells">number of cells</label>
@@ -21,12 +43,7 @@ export default function Settings() {
         type="number"
         placeholder="number of cells"
         value={context.settings.nbCells}
-        onChange={(e) =>
-          context.setSettings({
-            ...context.settings,
-            nbCells: Number(e.target.value),
-          })
-        }
+        onChange={handleSettings}
       />
       <label htmlFor="palets">number of palets</label>
       <input
@@ -34,25 +51,17 @@ export default function Settings() {
         type="number"
         placeholder="number of palets"
         value={context.settings.nbPalets}
-        onChange={(e) =>
-          context.setSettings({
-            ...context.settings,
-            nbPalets: Number(e.target.value),
-          })
-        }
+        onChange={handleSettings}
       />
-      <label htmlFor="tick">tick delay</label>
+      <label htmlFor="tick">tick delay: {context.settings.tickDelay}ms</label>
       <input
         id="tick"
-        type="number"
+        type="range"
+        min={1}
+        max={200}
         placeholder="tick delay"
         value={context.settings.tickDelay}
-        onChange={(e) =>
-          context.setSettings({
-            ...context.settings,
-            tickDelay: Number(e.target.value),
-          })
-        }
+        onChange={handleSettings}
       />
       <button
         disabled={

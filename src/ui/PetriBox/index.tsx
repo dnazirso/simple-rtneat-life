@@ -2,12 +2,13 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../core/AppContext";
 import Cell from "../Cell";
+import Controls from "../Controls";
 import Egg from "../Egg";
 import Food from "../Food";
 
 export default function PetriBox() {
   const navigate = useNavigate();
-  const { foods, cells, eggs, settings, behave, hatch } =
+  const { foods, cells, eggs, settings, pause, ShowCellZone, behave, hatch } =
     useContext(AppContext);
 
   useEffect(() => {
@@ -21,24 +22,28 @@ export default function PetriBox() {
       behave();
       hatch();
     }, settings.tickDelay);
+    if (pause) clearInterval(intervalID);
     return () => {
       clearInterval(intervalID);
     };
-  }, [behave, hatch, settings.tickDelay]);
+  }, [behave, hatch, pause, settings.tickDelay]);
 
   return (
-    <div className="Petri">
-      <div className="PetriBox">
-        {foods.map((f) => (
-          <Food key={f.id} {...f} />
-        ))}
-        {eggs.map((c) => (
-          <Egg key={c.id} {...c} />
-        ))}
-        {cells.map((c) => (
-          <Cell key={c.id} {...c} />
-        ))}
+    <>
+      <Controls />
+      <div className="Petri">
+        <div className="PetriBox">
+          {foods.map((f) => (
+            <Food key={f.id} {...f} />
+          ))}
+          {eggs.map((c) => (
+            <Egg key={c.id} {...c} />
+          ))}
+          {cells.map((c) => (
+            <Cell key={c.id} zone={ShowCellZone} {...c} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
