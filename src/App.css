@@ -56,6 +56,10 @@
   transform-origin: center;
 }
 
+.Sprite.Cell.Dying {
+  background-color: coral;
+}
+
 .Sprite.Zone {
   position: absolute;
   height: 40px;
