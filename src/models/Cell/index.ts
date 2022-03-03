@@ -1,7 +1,8 @@
 import { generateUID } from "../../helper";
 import { IEgg } from "../Egg";
 import { IFood } from "../Food";
-import { Genome } from "../genetic";
+import Genome, { IGenome } from "../Genome";
+import { initNodes } from "../Genome/Node";
 
 export interface ICell {
   id: string;
@@ -11,7 +12,7 @@ export interface ICell {
     a: number;
   };
   energy: number;
-  genome: Genome | null;
+  genome: IGenome;
   speed: number;
 }
 
@@ -19,7 +20,7 @@ export default class Cell implements ICell {
   id: string;
   position: { x: number; y: number; a: number };
   energy: number;
-  genome: Genome | null;
+  genome: IGenome;
   speed: number;
 
   constructor();
@@ -27,7 +28,7 @@ export default class Cell implements ICell {
   constructor(egg: IEgg);
   constructor(obj?: ICell) {
     this.id = obj?.id ?? generateUID();
-    this.genome = obj?.genome ?? null;
+    this.genome = obj?.genome ?? new Genome(initNodes(), []);
     this.position = obj?.position ?? {
       x: Math.random() * 100,
       y: Math.random() * 100,
