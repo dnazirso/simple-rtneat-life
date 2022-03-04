@@ -28,6 +28,14 @@ export default class Node implements INode {
     this.y = y;
     this.activation = activation;
   }
+
+  output(inputs: number[]) {
+    let result: number = 0;
+    for (let index = 0; index < inputs.length; index++) {
+      result += inputs[index] * this.activation;
+    }
+    return result > 0 ? result : 0;
+  }
 }
 
 export function initNodes() {
