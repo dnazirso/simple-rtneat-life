@@ -1,4 +1,4 @@
-import { IConnection } from "./Connections";
+import { IConnection } from "./Connection";
 import Node from "./Node";
 
 export interface IGenome {

@@ -29,7 +29,7 @@ export default function CellReducer(
 
   function addCell(egg: IEgg) {
     const cells = [...app.state.cells, new Cell(egg)];
-    app.setState({ ...app.state, cells });
+    app.setState({ cells });
   }
 
   function updateFood(foods: IFood[]) {
