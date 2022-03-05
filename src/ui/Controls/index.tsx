@@ -19,6 +19,7 @@ export default function Controls() {
     context.setShowCellZone(!context.ShowCellZone);
   };
   const handleRepeat = () => {
+    context.setSelected(null);
     context.setPause(false);
     context.emptyCells();
     context.initEggs();

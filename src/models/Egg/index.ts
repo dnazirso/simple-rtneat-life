@@ -1,6 +1,6 @@
 import { generateUID } from "../../helper";
 import { ICell } from "../Cell";
-import { Genome } from "../genetic";
+import { IGenome } from "../Genome";
 
 export interface IEgg extends ICell {
   hatchDelay: number;
@@ -10,11 +10,11 @@ export default class Egg implements IEgg {
   id: string;
   position: { x: number; y: number; a: number };
   energy: number;
-  genome: Genome | null;
+  genome: IGenome;
   speed: number;
   hatchDelay: number;
 
-  constructor({ w, h }: { w: number; h: number }) {
+  constructor({ w, h }: { w: number; h: number }, genome: IGenome) {
     this.id = generateUID();
     this.position = {
       x: Math.random() * w,
@@ -22,7 +22,7 @@ export default class Egg implements IEgg {
       a: Math.random() * 360,
     };
     this.energy = 1000 + Math.round(5 * (Math.random() - 0.5));
-    this.genome = null;
+    this.genome = genome;
     this.speed = 1;
     this.hatchDelay = 20 + Math.round(10 * (Math.random() - 0.5));
   }

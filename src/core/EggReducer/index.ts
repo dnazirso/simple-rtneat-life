@@ -1,20 +1,20 @@
 import { Component } from "react";
 import Cell from "../../models/Cell";
 import Egg from "../../models/Egg";
-import { IEgg } from "../../models/Egg";
+import Neat from "../../models/Genome/neat";
 import { IAppContext, Props } from "../AppContext";
 
 export interface IEggReducer {
   eggs: Egg[];
   initEggs: () => void;
-  addEgg: (egg: IEgg) => void;
+  addEgg: () => void;
   hatch: () => void;
 }
 
 export const initialEggs: IEggReducer = {
   eggs: [],
   initEggs: () => {},
-  addEgg: (egg: IEgg) => {},
+  addEgg: () => {},
   hatch: () => {},
 };
 
@@ -22,14 +22,17 @@ export default function EggReducer(
   app: Component<Props, IAppContext>
 ): IEggReducer {
   function addEgg() {
-    const eggs = [...app.state.eggs, new Egg(app.state.settings.area)];
+    const eggs = [...app.state.eggs, new Egg(app.state.settings.area, Neat())];
     app.setState({ ...app.state, eggs });
   }
+
   function initEggs() {
     const eggs = Array.from(
       { length: app.state.settings.nbCells },
       (_, i) => i
-    ).map((_) => new Egg(app.state.settings.area));
+    ).map((_) => {
+      return new Egg(app.state.settings.area, Neat());
+    });
 
     app.setState({ eggs });
   }

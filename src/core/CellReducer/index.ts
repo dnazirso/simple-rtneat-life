@@ -29,7 +29,7 @@ export default function CellReducer(
 
   function addCell(egg: IEgg) {
     const cells = [...app.state.cells, new Cell(egg)];
-    app.setState({ ...app.state, cells });
+    app.setState({ cells });
   }
 
   function updateFood(foods: IFood[]) {
@@ -41,7 +41,7 @@ export default function CellReducer(
       if (cell.energy - COST <= 0) {
         return acc;
       } else {
-        cell.behave();
+        cell.behave(app.state.foods);
         cell.eat(app.state.foods, updateFood);
         return [...acc, cell];
       }
