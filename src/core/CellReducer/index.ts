@@ -41,7 +41,7 @@ export default function CellReducer(
       if (cell.energy - COST <= 0) {
         return acc;
       } else {
-        cell.behave();
+        cell.behave(app.state.foods);
         cell.eat(app.state.foods, updateFood);
         return [...acc, cell];
       }

@@ -6,41 +6,40 @@ export interface INode {
   id: string;
   x: number;
   y: number;
-  activation: number;
   connections: Connection[];
+  output: number;
 }
 
 export default class Node implements INode {
   id: string;
   x: number;
   y: number;
-  activation: number;
   connections: Connection[];
+  output: number = 0;
 
   constructor({
     x,
     y,
-    activation,
     connections,
   }: {
     x: number;
     y: number;
-    activation: number;
     connections: Connection[];
   }) {
     this.id = generateUID();
     this.x = x;
     this.y = y;
-    this.activation = activation;
     this.connections = connections;
   }
 
-  output(inputs: number[]) {
-    let result: number = 0;
-    for (let index = 0; index < inputs.length; index++) {
-      result += inputs[index] * this.activation;
+  Calculate() {
+    let result = 0;
+    for (let i = 0; i < this.connections.length; i++) {
+      if (this.connections[i].enabled && this.connections[i].from) {
+        result += this.connections[i].weigth * this.connections[i].from.output;
+      }
     }
-    return result > 0 ? result : 0;
+    this.output = result;
   }
 }
 
@@ -53,7 +52,6 @@ export function initNodes() {
       new Node({
         x: 0,
         y: index / divider,
-        activation: Math.random(),
         connections: [],
       })
     );
@@ -63,7 +61,6 @@ export function initNodes() {
       new Node({
         x: 1,
         y: index / divider,
-        activation: Math.random(),
         connections: [],
       })
     );

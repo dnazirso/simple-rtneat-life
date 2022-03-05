@@ -1,7 +1,7 @@
 import { useRef, useCallback, useEffect } from "react";
-import { ICell } from "../../models/Cell";
+import { IGenome } from "../../models/Genome";
 
-export default function Genome({ cell }: { cell: ICell }) {
+export default function Genome({ genome }: { genome: IGenome }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const draw = useCallback(
@@ -9,14 +9,14 @@ export default function Genome({ cell }: { cell: ICell }) {
       ctx.canvas.width = 220;
       ctx.canvas.height = 160;
 
-      cell.genome.nodes.forEach((n) => {
+      genome.nodes.forEach((n) => {
         ctx.fillStyle = "ghostwhite";
         ctx.beginPath();
         ctx.arc(n.x * 200 + 10, n.y * 120 + 10, 10, 0, 2 * Math.PI);
         ctx.fill();
       });
 
-      cell.genome.connections.forEach((c) => {
+      genome.connections.forEach((c) => {
         ctx.beginPath();
         ctx.strokeStyle = "ghostwhite";
         ctx.moveTo(c.from.x * 200 + 10, c.from.y * 120 + 10);
@@ -24,7 +24,7 @@ export default function Genome({ cell }: { cell: ICell }) {
         ctx.stroke();
       });
     },
-    [cell]
+    [genome]
   );
 
   useEffect(() => {

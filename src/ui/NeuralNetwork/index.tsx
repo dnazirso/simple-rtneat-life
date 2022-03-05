@@ -8,7 +8,7 @@ export default function NeuralNetwork() {
   return cell ? (
     <div className="NeuralNetWork">
       <div>selected cell: {cell.id}</div>
-      <Genome cell={cell} />
+      <Genome genome={cell.genome} />
     </div>
   ) : null;
 }
