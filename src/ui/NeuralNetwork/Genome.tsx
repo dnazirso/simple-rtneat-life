@@ -10,15 +10,16 @@ export default function Genome({ genome }: { genome: IGenome }) {
       ctx.canvas.height = 160;
 
       genome.nodes.forEach((n) => {
-        ctx.fillStyle = "ghostwhite";
+        ctx.fillStyle = "white";
         ctx.beginPath();
-        ctx.arc(n.x * 200 + 10, n.y * 120 + 10, 10, 0, 2 * Math.PI);
+        ctx.arc(n.x * 200 + 10, n.y * 120 + 10, 6, 0, 2 * Math.PI);
         ctx.fill();
       });
 
       genome.connections.forEach((c) => {
         ctx.beginPath();
-        ctx.strokeStyle = "ghostwhite";
+        ctx.strokeStyle = c.enabled ? "white" : "black";
+        ctx.lineWidth = c.enabled ? 2 : 1;
         ctx.moveTo(c.from.x * 200 + 10, c.from.y * 120 + 10);
         ctx.lineTo(c.to.x * 200 + 10, c.to.y * 120 + 10);
         ctx.stroke();

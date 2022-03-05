@@ -1,11 +1,11 @@
 import {
   PROBABILITY_TO_ADD_CONNECTION,
   PROBABILITY_TO_ADD_NODE,
-  // PROBABILITY_TO_SHIFT_WEIGTH,
-  // PROBABILITY_TO_RANDOM_WEIGHT,
-  // PROBABILITY_TO_TOGGLE_CONNECTION,
-  // WEIGHT_SHIFT_STRENGTH,
-  // WEIGHT_RANDOM_STRENGTH,
+  PROBABILITY_TO_SHIFT_WEIGTH,
+  PROBABILITY_TO_RANDOM_WEIGHT,
+  PROBABILITY_TO_TOGGLE_CONNECTION,
+  WEIGHT_SHIFT_STRENGTH,
+  WEIGHT_RANDOM_STRENGTH,
 } from "./Constants";
 import Genome from "./";
 import Connection from "./Connection";
@@ -15,9 +15,9 @@ export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
   function Mutate() {
     if (PROBABILITY_TO_ADD_CONNECTION > Math.random()) AddConnection();
     if (PROBABILITY_TO_ADD_NODE > Math.random()) AddNode();
-    // if (PROBABILITY_TO_SHIFT_WEIGTH > Math.random()) ShiftWeight();
-    // if (PROBABILITY_TO_RANDOM_WEIGHT > Math.random()) RandomWeight();
-    // if (PROBABILITY_TO_TOGGLE_CONNECTION > Math.random()) ToggleConnection();
+    if (PROBABILITY_TO_SHIFT_WEIGTH > Math.random()) ShiftWeight();
+    if (PROBABILITY_TO_RANDOM_WEIGHT > Math.random()) RandomWeight();
+    if (PROBABILITY_TO_TOGGLE_CONNECTION > Math.random()) ToggleConnection();
     return genome;
   }
 
@@ -84,22 +84,25 @@ export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
     genome.nodes.push(nodeB);
   }
 
-  // function ShiftWeight() {
-  //   genome.connections[
-  //     Math.floor(Math.random() * genome.connections.length)
-  //   ].weigth = (Math.random() - 0.5) * WEIGHT_SHIFT_STRENGTH;
-  // }
+  function ShiftWeight() {
+    const index = Math.floor(Math.random() * genome.connections.length);
+    if (!genome.connections[index]) return;
+    genome.connections[index].weigth =
+      (Math.random() - 0.5) * WEIGHT_SHIFT_STRENGTH;
+  }
 
-  // function RandomWeight() {
-  //   genome.connections[
-  //     Math.floor(Math.random() * genome.connections.length)
-  //   ].weigth = (Math.random() - 0.5) * WEIGHT_RANDOM_STRENGTH;
-  // }
+  function RandomWeight() {
+    const index = Math.floor(Math.random() * genome.connections.length);
+    if (!genome.connections[index]) return;
+    genome.connections[index].weigth =
+      (Math.random() - 0.5) * WEIGHT_RANDOM_STRENGTH;
+  }
 
-  // function ToggleConnection() {
-  //   const index = Math.floor(Math.random() * genome.connections.length);
-  //   genome.connections[index].enabled = !genome.connections[index].enabled;
-  // }
+  function ToggleConnection() {
+    const index = Math.floor(Math.random() * genome.connections.length);
+    if (!genome.connections[index]) return;
+    genome.connections[index].enabled = !genome.connections[index].enabled;
+  }
 
   return Mutate();
 }

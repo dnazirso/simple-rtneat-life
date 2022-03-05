@@ -150,13 +150,3 @@
   position: relative;
   margin-left: 10px;
 }
-
-.Node {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  background-color: ghostwhite;
-  transform-origin: center;
-  transform: translate(-10px, -10px);
-}
