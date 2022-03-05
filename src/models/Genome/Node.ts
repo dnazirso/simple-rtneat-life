@@ -1,11 +1,13 @@
 import { generateUID } from "../../helper";
-import { NUMBER_OF_INPUT_NODES, NUMBER_OF_OUTPUT_NODES } from "../Constants";
+import { NUMBER_OF_INPUT_NODES, NUMBER_OF_OUTPUT_NODES } from "./Constants";
+import Connection from "./Connection";
 
 export interface INode {
   id: string;
   x: number;
   y: number;
   activation: number;
+  connections: Connection[];
 }
 
 export default class Node implements INode {
@@ -13,20 +15,24 @@ export default class Node implements INode {
   x: number;
   y: number;
   activation: number;
+  connections: Connection[];
 
   constructor({
     x,
     y,
     activation,
+    connections,
   }: {
     x: number;
     y: number;
     activation: number;
+    connections: Connection[];
   }) {
     this.id = generateUID();
     this.x = x;
     this.y = y;
     this.activation = activation;
+    this.connections = connections;
   }
 
   output(inputs: number[]) {
@@ -46,6 +52,7 @@ export function initNodes() {
         x: 0,
         y: (index + 1) / NUMBER_OF_INPUT_NODES,
         activation: Math.random(),
+        connections: [],
       })
     );
   }
@@ -55,6 +62,7 @@ export function initNodes() {
         x: 1,
         y: (index + 1) / NUMBER_OF_INPUT_NODES,
         activation: Math.random(),
+        connections: [],
       })
     );
   }

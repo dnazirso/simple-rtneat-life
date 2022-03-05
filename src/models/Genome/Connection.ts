@@ -1,15 +1,23 @@
+import { generateUID } from "../../helper";
+import Node from "./Node";
+
 export interface IConnection {
-  to: string;
+  id: string;
+  from: Node;
+  to: Node;
   weigth: number;
   enabled: boolean;
 }
 
 export default class Connection implements IConnection {
-  to: string;
-  weigth: number = Math.random();
+  id: string = generateUID();
+  from: Node;
+  to: Node;
+  weigth: number = (Math.random() - 0.5) * 2;
   enabled: boolean = true;
 
-  constructor({ to }: { to: string }) {
+  constructor({ from, to }: { from: Node; to: Node }) {
+    this.from = from;
     this.to = to;
   }
 }
