@@ -19,11 +19,7 @@ export default function Controls() {
     context.setShowCellZone(!context.ShowCellZone);
   };
   const handleRepeat = () => {
-    context.setSelected(null);
-    context.setPause(false);
-    context.emptyCells();
-    context.initEggs();
-    context.initFoods();
+    context.repeate();
   };
   const handleNextFrame = () => {
     context.behave();
@@ -32,6 +28,7 @@ export default function Controls() {
 
   return (
     <div className="Controls">
+      <h1>Generation : {context.generation}</h1>
       <label htmlFor="tick">tick delay: {context.settings.tickDelay}ms</label>
       <input
         id="tick"
@@ -43,7 +40,7 @@ export default function Controls() {
         onChange={handleSettings}
       />
       <span>
-        <label htmlFor="zone">Cell area of ​​influence:</label>
+        <label htmlFor="zone">Cell area of influence:</label>
         <input
           id="zone"
           type="checkbox"

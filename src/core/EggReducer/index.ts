@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Cell from "../../models/Cell";
 import Egg from "../../models/Egg";
+import Genome from "../../models/Genome";
 import Neat from "../../models/Genome/neat";
 import { IAppContext, Props } from "../AppContext";
 
@@ -9,11 +10,13 @@ export interface IEggReducer {
   initEggs: () => void;
   addEgg: () => void;
   hatch: () => void;
+  initEggsFromLastGenerationBestCell: () => void;
 }
 
 export const initialEggs: IEggReducer = {
   eggs: [],
   initEggs: () => {},
+  initEggsFromLastGenerationBestCell: () => {},
   addEgg: () => {},
   hatch: () => {},
 };
@@ -37,6 +40,20 @@ export default function EggReducer(
     app.setState({ eggs });
   }
 
+  function initEggsFromLastGenerationBestCell() {
+    const { best } = app.state;
+    if (!best) return;
+    const eggs = Array.from(
+      { length: app.state.settings.nbCells },
+      (_, i) => i
+    ).map((_) => {
+      const genome = new Genome(best.genome.nodes, best.genome.connections);
+      return new Egg(app.state.settings.area, Neat(genome));
+    });
+
+    app.setState({ eggs });
+  }
+
   function hatch() {
     const allEggs = app.state.eggs.map((egg) => {
       egg.hatchDelay--;
@@ -54,5 +71,6 @@ export default function EggReducer(
     addEgg,
     initEggs,
     hatch,
+    initEggsFromLastGenerationBestCell,
   };
 }
