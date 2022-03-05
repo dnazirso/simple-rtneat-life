@@ -1,6 +1,6 @@
 import {
   PROBABILITY_TO_ADD_CONNECTION,
-  // PROBABILITY_TO_ADD_NODE,
+  PROBABILITY_TO_ADD_NODE,
   // PROBABILITY_TO_SHIFT_WEIGTH,
   // PROBABILITY_TO_RANDOM_WEIGHT,
   // PROBABILITY_TO_TOGGLE_CONNECTION,
@@ -9,13 +9,12 @@ import {
 } from "./Constants";
 import Genome from "./";
 import Connection from "./Connection";
-// import Node, { initNodes } from "./Node";
-import { initNodes } from "./Node";
+import Node, { initNodes } from "./Node";
 
 export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
   function Mutate() {
     if (PROBABILITY_TO_ADD_CONNECTION > Math.random()) AddConnection();
-    // if (PROBABILITY_TO_ADD_NODE > Math.random()) AddNode();
+    if (PROBABILITY_TO_ADD_NODE > Math.random()) AddNode();
     // if (PROBABILITY_TO_SHIFT_WEIGTH > Math.random()) ShiftWeight();
     // if (PROBABILITY_TO_RANDOM_WEIGHT > Math.random()) RandomWeight();
     // if (PROBABILITY_TO_TOGGLE_CONNECTION > Math.random()) ToggleConnection();
@@ -28,23 +27,14 @@ export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
     const nodeA = genome.nodes[indexA];
     const nodeB = genome.nodes[indexB];
 
-    if (nodeA.id === nodeB.id) {
-      return;
-    }
+    if (!nodeA) return;
+    if (!nodeB) return;
 
-    if (nodeA.x === nodeB.x) {
-      return;
-    }
+    if (nodeA.id === nodeB.id) return;
+    if (nodeA.x === nodeB.x) return;
 
-    if (
-      genome.connections.some(
-        (c) =>
-          (c.from.id === nodeA.id && c.to.id === nodeB.id) ||
-          (c.from.id === nodeB.id && c.to.id === nodeA.id)
-      )
-    ) {
-      return;
-    }
+    if (genome.connections.find((c) => c.id === nodeA.id + nodeB.id)) return;
+    if (genome.connections.find((c) => c.id === nodeB.id + nodeA.id)) return;
 
     if (nodeA.x < nodeB.x) {
       const connection = new Connection({ from: nodeA, to: nodeB });
@@ -57,37 +47,42 @@ export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
     }
   }
 
-  // function AddNode() {
-  //   const index = Math.floor(Math.random() * genome.connections.length);
-  //   const prevConnection = genome.connections[index];
+  function AddNode() {
+    const index = Math.floor(Math.random() * genome.connections.length);
+    const prevConnection = genome.connections[index];
 
-  //   const nodeA = prevConnection.from;
-  //   const nodeC = prevConnection.to;
+    if (!prevConnection) return;
 
-  //   nodeA.connections = nodeA.connections.filter(
-  //     (c) => c.id !== prevConnection.id
-  //   );
-  //   nodeC.connections = nodeC.connections.filter(
-  //     (c) => c.id !== prevConnection.id
-  //   );
+    let nodeA = prevConnection.from;
+    let nodeC = prevConnection.to;
 
-  //   const nodeB = new Node({
-  //     x: (prevConnection.from.x + prevConnection.to.x) / 2,
-  //     y: (prevConnection.from.y + prevConnection.to.y) / 2,
-  //     connections: [],
-  //   });
+    nodeA.connections = nodeA.connections.filter(
+      (c) => c.id !== prevConnection.id
+    );
+    nodeC.connections = nodeC.connections.filter(
+      (c) => c.id !== prevConnection.id
+    );
 
-  //   const connection1 = new Connection({ from: nodeA, to: nodeB });
-  //   const connection2 = new Connection({ from: nodeB, to: nodeC });
-  //   connection1.weigth = 1;
-  //   connection2.weigth = prevConnection.weigth;
-  //   connection2.enabled = prevConnection.enabled;
+    let nodeB = new Node({
+      x: (prevConnection.from.x + prevConnection.to.x) / 2,
+      y: (prevConnection.from.y + prevConnection.to.y) / 2,
+      connections: [],
+    });
 
-  //   nodeB.connections.push(connection1);
-  //   nodeC.connections.push(connection2);
-  //   genome.connections.filter((c) => c.id !== prevConnection.id);
-  //   genome.connections.push(connection1, connection2);
-  // }
+    let connection1 = new Connection({ from: nodeA, to: nodeB });
+    let connection2 = new Connection({ from: nodeB, to: nodeC });
+    connection1.weigth = 1;
+    connection2.weigth = prevConnection.weigth;
+    connection2.enabled = prevConnection.enabled;
+
+    nodeB.connections.push(connection1);
+    nodeC.connections.push(connection2);
+    genome.connections = genome.connections.filter(
+      (c) => c.id !== prevConnection.id
+    );
+    genome.connections.push(connection1, connection2);
+    genome.nodes.push(nodeB);
+  }
 
   // function ShiftWeight() {
   //   genome.connections[
