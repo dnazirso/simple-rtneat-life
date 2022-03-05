@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import AppContext from "../../core/AppContext";
-import Neuron from "./Neuron";
+import Genome from "./Genome";
 
 export default function NeuralNetwork() {
   const { selected, cells } = useContext(AppContext);
@@ -8,7 +8,7 @@ export default function NeuralNetwork() {
   return cell ? (
     <div className="NeuralNetWork">
       <div>selected cell: {cell.id}</div>
-      <Neuron cell={cell} />
+      <Genome cell={cell} />
     </div>
   ) : null;
 }

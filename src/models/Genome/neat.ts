@@ -9,9 +9,9 @@ import {
 } from "./Constants";
 import Genome from "./";
 import Connection from "./Connection";
-import Node from "./Node";
+import Node, { initNodes } from "./Node";
 
-export default function Neat(genome: Genome) {
+export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
   function Mutate() {
     if (PROBABILITY_TO_ADD_CONNECTION > Math.random()) AddConnection();
     if (PROBABILITY_TO_ADD_NODE > Math.random()) AddNode();

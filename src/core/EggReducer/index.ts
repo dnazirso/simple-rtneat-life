@@ -1,8 +1,7 @@
 import { Component } from "react";
 import Cell from "../../models/Cell";
 import Egg from "../../models/Egg";
-import Genome from "../../models/Genome";
-import { initNodes } from "../../models/Genome/Node";
+import Neat from "../../models/Genome/neat";
 import { IAppContext, Props } from "../AppContext";
 
 export interface IEggReducer {
@@ -23,9 +22,7 @@ export default function EggReducer(
   app: Component<Props, IAppContext>
 ): IEggReducer {
   function addEgg() {
-    const nodes = initNodes();
-    const genome = new Genome(nodes, []);
-    const eggs = [...app.state.eggs, new Egg(app.state.settings.area, genome)];
+    const eggs = [...app.state.eggs, new Egg(app.state.settings.area, Neat())];
     app.setState({ ...app.state, eggs });
   }
 
@@ -34,9 +31,7 @@ export default function EggReducer(
       { length: app.state.settings.nbCells },
       (_, i) => i
     ).map((_) => {
-      const nodes = initNodes();
-      const genome = new Genome(nodes, []);
-      return new Egg(app.state.settings.area, genome);
+      return new Egg(app.state.settings.area, Neat());
     });
 
     app.setState({ eggs });
