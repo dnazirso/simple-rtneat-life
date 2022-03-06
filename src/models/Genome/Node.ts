@@ -20,16 +20,17 @@ export default class Node implements INode {
   constructor({
     x,
     y,
-    connections,
+    id,
   }: {
     x: number;
     y: number;
     connections: Connection[];
+    id?: string;
   }) {
-    this.id = generateUID();
+    this.id = id ?? generateUID();
     this.x = x;
     this.y = y;
-    this.connections = connections;
+    this.connections = [];
   }
 
   Calculate() {

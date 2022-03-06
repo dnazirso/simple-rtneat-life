@@ -1,4 +1,5 @@
 import { Component } from "react";
+import Cell from "../../models/Cell";
 import { ISettings } from "../../models/Settings";
 import { IAppContext, Props } from "../AppContext";
 
@@ -68,6 +69,7 @@ export default function SettingsReducer(
     app.state.emptyCells();
     app.state.initEggs();
     app.state.initFoods();
+    app.setState({ best: { cell: new Cell(), generation: 1 } });
   }
 
   function launchNextGeneration() {
