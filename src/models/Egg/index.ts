@@ -25,7 +25,7 @@ export default class Egg implements IEgg {
     this.energy = 1000 + Math.round(5 * (Math.random() - 0.5));
     this.genome = genome;
     this.speed = 1;
-    this.acceleration = 1;
+    this.acceleration = 0;
     this.hatchDelay = 20 + Math.round(10 * (Math.random() - 0.5));
   }
 }

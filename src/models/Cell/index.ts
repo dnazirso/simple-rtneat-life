@@ -38,7 +38,7 @@ export default class Cell implements ICell {
     };
     this.energy = obj?.energy ?? 1000 + Math.round(5 * (Math.random() - 0.5));
     this.speed = obj?.speed ?? 1;
-    this.acceleration = obj?.speed ?? 1;
+    this.acceleration = obj?.speed ?? 0;
   }
 
   behave(foods: IFood[]) {
@@ -49,10 +49,8 @@ export default class Cell implements ICell {
 
     const output = this.genome.Calculate([x, y]);
 
-    if (output[0] && output[0] !== this.acceleration)
-      this.changeAcceleration(output[1]);
-    if (output[1] && output[1] !== this.position.a)
-      this.changeDirection(output[1]);
+    this.changeAcceleration(output[0]);
+    this.changeDirection(output[1]);
     this.move();
 
     this.energy--;
@@ -78,20 +76,18 @@ export default class Cell implements ICell {
 
   move() {
     const angle = this.position.a * (Math.PI / 180);
-    this.position.x =
-      this.position.x +
-      Math.cos(Math.PI - angle) * this.speed * this.acceleration;
-    this.position.y =
-      this.position.y -
-      Math.sin(Math.PI - angle) * this.speed * this.acceleration;
+    this.position.x +=
+      this.speed * this.acceleration * Math.cos(Math.PI - angle);
+    this.position.y -=
+      this.speed * this.acceleration * Math.sin(Math.PI - angle);
   }
 
-  changeAcceleration(acceleration: number) {
-    this.acceleration = acceleration;
+  changeAcceleration(z: number) {
+    this.acceleration = z / (1 + Math.abs(z));
   }
 
-  changeDirection(a: number) {
-    this.position.a = a;
+  changeDirection(z: number) {
+    this.position.a = this.position.a * (z / (1 + Math.abs(z)) + 1);
   }
 
   eat(foods: IFood[], updateFood: (foods: IFood[]) => void) {
