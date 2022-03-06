@@ -36,7 +36,7 @@ export default class Cell implements ICell {
       y: Math.random() * 100,
       a: Math.random() * 360,
     };
-    this.energy = obj?.energy ?? 1000 + Math.round(5 * (Math.random() - 0.5));
+    this.energy = obj?.energy ?? 100 + Math.round(5 * (Math.random() - 0.5));
     this.speed = obj?.speed ?? 1;
     this.acceleration = obj?.speed ?? 0;
   }
@@ -101,7 +101,7 @@ export default class Cell implements ICell {
 
       if (hasCollid) {
         this.energy += food.energy;
-        this.genome.score++;
+        this.genome.score += 10;
       }
       return !hasCollid;
     });
