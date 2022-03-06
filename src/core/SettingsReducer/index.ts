@@ -52,12 +52,12 @@ export default function SettingsReducer(
   function run() {
     app.state.behave();
     app.state.hatch();
-    const best = app.state.cells.sort(
+    const cell = app.state.cells.sort(
       (a, b) => b.genome.score - a.genome.score
     )[0];
 
-    if (best && best.genome.score > app.state.best.genome.score) {
-      app.setState({ best });
+    if (cell && cell.genome.score > app.state.best.cell.genome.score) {
+      app.setState({ best: { cell: cell, generation: app.state.generation } });
     }
   }
 

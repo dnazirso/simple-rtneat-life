@@ -8,7 +8,7 @@ const COST = 1;
 
 export interface ICellReducer {
   cells: Cell[];
-  best: Cell;
+  best: { cell: Cell; generation: number };
   emptyCells: () => void;
   addCell: (egg: IEgg) => void;
   behave: () => void;
@@ -16,7 +16,7 @@ export interface ICellReducer {
 
 export const initialCells: ICellReducer = {
   cells: [],
-  best: new Cell(),
+  best: { cell: new Cell(), generation: 0 },
   emptyCells: () => {},
   addCell: (egg: IEgg) => {},
   behave: () => {},
@@ -53,7 +53,7 @@ export default function CellReducer(
 
   return {
     cells: [],
-    best: new Cell(),
+    best: { cell: new Cell(), generation: 0 },
     addCell,
     behave,
     emptyCells,

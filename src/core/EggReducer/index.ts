@@ -47,7 +47,10 @@ export default function EggReducer(
       { length: app.state.settings.nbCells },
       (_, i) => i
     ).map((_) => {
-      const genome = new Genome(best.genome.nodes, best.genome.connections);
+      const genome = new Genome(
+        best.cell.genome.nodes,
+        best.cell.genome.connections
+      );
       return new Egg(app.state.settings.area, Neat(genome));
     });
 

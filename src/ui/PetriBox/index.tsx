@@ -54,7 +54,7 @@ export default function PetriBox() {
         {cells.map((c) => (
           <Cell
             key={c.id}
-            isBest={c.id === best?.id}
+            isBest={c.id === best?.cell.id}
             selectCell={setSelected}
             zone={ShowCellZone}
             {...c}
