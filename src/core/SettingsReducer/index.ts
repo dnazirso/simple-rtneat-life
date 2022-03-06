@@ -25,7 +25,7 @@ export const initialSettings: ISettingsReducer = {
   settings: {
     tickDelay: 30,
     nbCells: 10,
-    nbPalets: 50,
+    nbPalets: 100,
     area: {
       h: 500,
       w: 500,

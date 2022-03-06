@@ -79,6 +79,7 @@ export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
 
     genome.connections = [...genome.connections, connection1, connection2];
 
+    nodeA.connections = genome.connections.filter((c) => c.to.id === nodeA.id);
     nodeB.connections = genome.connections.filter((c) => c.to.id === nodeB.id);
     nodeC.connections = genome.connections.filter((c) => c.to.id === nodeC.id);
 
