@@ -54,6 +54,7 @@ export default class Cell implements ICell {
     this.move();
 
     this.energy--;
+    this.genome.score++;
   }
 
   getClosestFood(foods: IFood[]) {
