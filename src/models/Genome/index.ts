@@ -1,4 +1,4 @@
-import { IConnection } from "./Connection";
+import Connection, { IConnection } from "./Connection";
 import { NUMBER_OF_INPUT_NODES, NUMBER_OF_OUTPUT_NODES } from "./Constants";
 import Node from "./Node";
 
@@ -15,8 +15,21 @@ export default class Genome implements IGenome {
   score: number;
 
   constructor(nodes: Node[], connections: IConnection[]) {
-    this.nodes = nodes;
-    this.connections = connections;
+    this.nodes = nodes.map((n) => new Node(n));
+    this.connections = connections.map((c) => {
+      const fromIndex = this.nodes.findIndex((n) => n.id === c.from.id);
+      const toIndex = this.nodes.findIndex((n) => n.id === c.to.id);
+
+      const from = nodes[fromIndex];
+      const to = nodes[toIndex];
+
+      return new Connection({ from, to });
+    });
+
+    nodes.forEach((n) => {
+      n.connections = this.connections.filter((c) => c.to.id === n.id);
+    });
+
     this.score = 0;
   }
 

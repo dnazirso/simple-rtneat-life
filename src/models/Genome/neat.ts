@@ -68,7 +68,6 @@ export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
     let nodeB = new Node({
       x: (nodeA.x + nodeC.x) / 2,
       y: y / 2,
-      connections: [],
     });
 
     let connection1 = new Connection({ from: nodeA, to: nodeB });
@@ -89,7 +88,7 @@ export default function Neat(genome: Genome = new Genome(initNodes(), [])) {
   function ShiftWeight() {
     const index = Math.floor(Math.random() * genome.connections.length);
     if (!genome.connections[index]) return;
-    genome.connections[index].weigth =
+    genome.connections[index].weigth +=
       (Math.random() - 0.5) * WEIGHT_SHIFT_STRENGTH;
   }
 
