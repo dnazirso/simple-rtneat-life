@@ -1,4 +1,4 @@
-export const NUMBER_OF_INPUT_NODES = 2;
+export const NUMBER_OF_INPUT_NODES = 6;
 export const NUMBER_OF_OUTPUT_NODES = 2;
 
 export const PROBABILITY_TO_ADD_CONNECTION = 0.2;

@@ -38,13 +38,11 @@ export default class Node implements INode {
 
 export function initNodes() {
   const nodes: Node[] = [];
-  const divider =
-    NUMBER_OF_INPUT_NODES - 1 === 0 ? 1 : NUMBER_OF_INPUT_NODES - 1;
   for (let index = 0; index < NUMBER_OF_INPUT_NODES; index++) {
     nodes.push(
       new Node({
         x: 0,
-        y: index / divider,
+        y: index / NUMBER_OF_INPUT_NODES,
       })
     );
   }
@@ -52,7 +50,9 @@ export function initNodes() {
     nodes.push(
       new Node({
         x: 1,
-        y: index / divider,
+        y:
+          index / NUMBER_OF_OUTPUT_NODES +
+          1 / (2 * (NUMBER_OF_OUTPUT_NODES + 1)),
       })
     );
   }

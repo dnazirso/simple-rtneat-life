@@ -1,4 +1,4 @@
- import { generateUID } from "../../helper";
+import { generateUID } from "../../helper";
 import { IEgg } from "../Egg";
 import { IFood } from "../Food";
 import Genome, { IGenome } from "../Genome";
@@ -47,7 +47,14 @@ export default class Cell implements ICell {
 
     const { x, y } = food.position;
 
-    const output = this.genome.Calculate([x, y]);
+    const output = this.genome.Calculate([
+      x,
+      y,
+      this.energy,
+      this.position.x,
+      this.position.y,
+      this.position.a,
+    ]);
 
     this.changeAcceleration(output[0]);
     this.changeDirection(output[1]);
