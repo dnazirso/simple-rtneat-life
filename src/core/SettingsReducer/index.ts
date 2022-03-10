@@ -1,4 +1,5 @@
 import { Component } from "react";
+import Cell from "../../models/Cell";
 import { ISettings } from "../../models/Settings";
 import { IAppContext, Props } from "../AppContext";
 
@@ -7,6 +8,11 @@ export interface ISettingsReducer {
   pause: boolean;
   ShowCellZone: boolean;
   selected: string | null;
+  generation: number;
+  run: () => void;
+  repeate: () => void;
+  launchNextGeneration: () => void;
+  setGeneration: (generation: number) => void;
   setPause: (pause: boolean) => void;
   setSelected: (selected: string | null) => void;
   setShowCellZone: (ShowCellZone: boolean) => void;
@@ -17,9 +23,9 @@ export interface ISettingsReducer {
 
 export const initialSettings: ISettingsReducer = {
   settings: {
-    tickDelay: 100,
+    tickDelay: 30,
     nbCells: 10,
-    nbPalets: 50,
+    nbPalets: 100,
     area: {
       h: 500,
       w: 500,
@@ -28,6 +34,11 @@ export const initialSettings: ISettingsReducer = {
   pause: false,
   ShowCellZone: false,
   selected: null,
+  generation: 1,
+  run: () => {},
+  repeate: () => {},
+  launchNextGeneration: () => {},
+  setGeneration: (generation: number) => {},
   setPause: (pause: boolean) => {},
   setSelected: (selected: string | null) => {},
   setShowCellZone: (ShowCellZone: boolean) => {},
@@ -39,6 +50,40 @@ export const initialSettings: ISettingsReducer = {
 export default function SettingsReducer(
   app: Component<Props, IAppContext>
 ): ISettingsReducer {
+  function run() {
+    app.state.behave();
+    app.state.hatch();
+    const cell = app.state.cells.sort(
+      (a, b) => b.genome.score - a.genome.score
+    )[0];
+
+    if (cell && cell.genome.score > app.state.best.cell.genome.score) {
+      app.setState({ best: { cell: cell, generation: app.state.generation } });
+    }
+  }
+
+  function repeate() {
+    app.state.setGeneration(1);
+    app.state.setSelected(null);
+    app.state.setPause(false);
+    app.state.emptyCells();
+    app.state.initEggs();
+    app.state.initFoods();
+    app.setState({ best: { cell: new Cell(), generation: 1 } });
+  }
+
+  function launchNextGeneration() {
+    app.state.setGeneration(app.state.generation + 1);
+    app.state.setSelected(null);
+    app.state.setPause(false);
+    app.state.initEggsFromLastGenerationBestCell();
+    app.state.initFoods();
+  }
+
+  function setGeneration(generation: number) {
+    app.setState({ generation });
+  }
+
   function setPause(pause: boolean) {
     app.setState({ pause });
   }
@@ -74,6 +119,10 @@ export default function SettingsReducer(
 
   return {
     ...initialSettings,
+    run,
+    repeate,
+    launchNextGeneration,
+    setGeneration,
     setShowCellZone,
     setPause,
     setSelected,

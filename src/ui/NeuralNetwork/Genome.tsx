@@ -9,13 +9,6 @@ export default function Genome({ genome }: { genome: IGenome }) {
       ctx.canvas.width = 220;
       ctx.canvas.height = 160;
 
-      genome.nodes.forEach((n) => {
-        ctx.fillStyle = "white";
-        ctx.beginPath();
-        ctx.arc(n.x * 200 + 10, n.y * 120 + 10, 6, 0, 2 * Math.PI);
-        ctx.fill();
-      });
-
       genome.connections.forEach((c) => {
         ctx.beginPath();
         ctx.strokeStyle = c.enabled ? "white" : "black";
@@ -23,6 +16,13 @@ export default function Genome({ genome }: { genome: IGenome }) {
         ctx.moveTo(c.from.x * 200 + 10, c.from.y * 120 + 10);
         ctx.lineTo(c.to.x * 200 + 10, c.to.y * 120 + 10);
         ctx.stroke();
+      });
+
+      genome.nodes.forEach((n) => {
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.arc(n.x * 200 + 10, n.y * 120 + 10, 6, 0, 2 * Math.PI);
+        ctx.fill();
       });
     },
     [genome]

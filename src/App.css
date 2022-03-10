@@ -46,6 +46,10 @@
   border: lightgrey 1px solid;
 }
 
+.Best {
+  border: chartreuse 1px solid;
+}
+
 .Sprite.Cell {
   position: absolute;
   height: 10px;

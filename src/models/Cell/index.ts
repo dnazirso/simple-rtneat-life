@@ -1,4 +1,4 @@
-import { generateUID } from "../../helper";
+ import { generateUID } from "../../helper";
 import { IEgg } from "../Egg";
 import { IFood } from "../Food";
 import Genome, { IGenome } from "../Genome";
@@ -14,6 +14,7 @@ export interface ICell {
   energy: number;
   genome: IGenome;
   speed: number;
+  acceleration: number;
 }
 
 export default class Cell implements ICell {
@@ -22,6 +23,7 @@ export default class Cell implements ICell {
   energy: number;
   genome: IGenome;
   speed: number;
+  acceleration: number;
 
   constructor();
   constructor(cell: ICell);
@@ -34,8 +36,9 @@ export default class Cell implements ICell {
       y: Math.random() * 100,
       a: Math.random() * 360,
     };
-    this.energy = obj?.energy ?? 1000 + Math.round(5 * (Math.random() - 0.5));
+    this.energy = obj?.energy ?? 200 + Math.round(5 * (Math.random() - 0.5));
     this.speed = obj?.speed ?? 1;
+    this.acceleration = obj?.speed ?? 0;
   }
 
   behave(foods: IFood[]) {
@@ -46,20 +49,23 @@ export default class Cell implements ICell {
 
     const output = this.genome.Calculate([x, y]);
 
-    if (output[0] > 0.2) this.moveForward();
-    if (output[1] !== 0 && this.position.a !== 0)
-      this.changeDirection(output[1]);
+    this.changeAcceleration(output[0]);
+    this.changeDirection(output[1]);
+    this.move();
 
     this.energy--;
+    this.genome.score++;
   }
 
   getClosestFood(foods: IFood[]) {
     foods.sort((a, b) => {
       const dista = Math.sqrt(
-        a.position.x - this.position.x + (a.position.y - this.position.y)
+        Math.pow(a.position.x - this.position.x, 2) +
+          Math.pow(a.position.y - this.position.y, 2)
       );
       const distb = Math.sqrt(
-        b.position.x - this.position.x + (b.position.y - this.position.y)
+        Math.pow(b.position.x - this.position.x, 2) +
+          Math.pow(b.position.y - this.position.y, 2)
       );
       if (dista === distb) return 0;
       if (dista > distb) return 1;
@@ -69,14 +75,20 @@ export default class Cell implements ICell {
     return foods[0];
   }
 
-  moveForward() {
+  move() {
     const angle = this.position.a * (Math.PI / 180);
-    this.position.x = this.position.x + Math.cos(Math.PI - angle) * this.speed;
-    this.position.y = this.position.y - Math.sin(Math.PI - angle) * this.speed;
+    this.position.x +=
+      this.speed * this.acceleration * Math.cos(Math.PI - angle);
+    this.position.y -=
+      this.speed * this.acceleration * Math.sin(Math.PI - angle);
   }
 
-  changeDirection(a: number) {
-    this.position.a = a;
+  changeAcceleration(z: number) {
+    this.acceleration = z / (1 + Math.abs(z));
+  }
+
+  changeDirection(z: number) {
+    this.position.a = this.position.a * (z / (1 + Math.abs(z)) + 1);
   }
 
   eat(foods: IFood[], updateFood: (foods: IFood[]) => void) {
@@ -87,8 +99,10 @@ export default class Cell implements ICell {
         food.position.y < this.position.y + 20 &&
         food.position.y > this.position.y - 20;
 
-      if (hasCollid) this.energy += food.energy;
-      this.genome.score++;
+      if (hasCollid) {
+        this.energy += food.energy;
+        this.genome.score += 10;
+      }
       return !hasCollid;
     });
 

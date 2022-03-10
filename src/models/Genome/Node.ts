@@ -17,23 +17,16 @@ export default class Node implements INode {
   connections: Connection[];
   output: number = 0;
 
-  constructor({
-    x,
-    y,
-    connections,
-  }: {
-    x: number;
-    y: number;
-    connections: Connection[];
-  }) {
-    this.id = generateUID();
+  constructor({ x, y, id }: { x: number; y: number; id?: string }) {
+    this.id = id ?? generateUID();
     this.x = x;
     this.y = y;
-    this.connections = connections;
+    this.connections = [];
   }
 
   Calculate() {
     let result = 0;
+    this.output = 0;
     for (let i = 0; i < this.connections.length; i++) {
       if (this.connections[i].enabled && this.connections[i].from) {
         result += this.connections[i].weigth * this.connections[i].from.output;
@@ -52,7 +45,6 @@ export function initNodes() {
       new Node({
         x: 0,
         y: index / divider,
-        connections: [],
       })
     );
   }
@@ -61,7 +53,6 @@ export function initNodes() {
       new Node({
         x: 1,
         y: index / divider,
-        connections: [],
       })
     );
   }

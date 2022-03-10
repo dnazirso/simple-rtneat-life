@@ -11,12 +11,13 @@ export default function PetriBox() {
     foods,
     cells,
     eggs,
+    best,
     settings,
     pause,
     ShowCellZone,
-    behave,
-    hatch,
+    run,
     setSelected,
+    launchNextGeneration,
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -26,15 +27,20 @@ export default function PetriBox() {
   }, [cells.length, eggs.length, foods.length, navigate]);
 
   useEffect(() => {
+    if (foods.length > 0 && cells.length === 0 && eggs.length === 0) {
+      launchNextGeneration();
+    }
+  }, [cells.length, eggs.length, foods.length, launchNextGeneration]);
+
+  useEffect(() => {
     const intervalID = setInterval(() => {
-      behave();
-      hatch();
+      run();
     }, settings.tickDelay);
     if (pause) clearInterval(intervalID);
     return () => {
       clearInterval(intervalID);
     };
-  }, [behave, hatch, pause, settings.tickDelay]);
+  }, [pause, run, settings.tickDelay]);
 
   return (
     <div className="Petri">
@@ -48,6 +54,7 @@ export default function PetriBox() {
         {cells.map((c) => (
           <Cell
             key={c.id}
+            isBest={c.id === best?.cell.id}
             selectCell={setSelected}
             zone={ShowCellZone}
             {...c}
